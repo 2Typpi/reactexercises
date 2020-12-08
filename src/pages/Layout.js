@@ -7,7 +7,7 @@ import Home from "./Home";
 import Shop from "./Shop";
 
 //import Styling
-import '../css/Layout.css'
+import "../css/Layout.css";
 
 export default class Layout extends React.Component {
   render() {
@@ -15,11 +15,11 @@ export default class Layout extends React.Component {
       <HashRouter>
         <div>
           <NavBar location={window.location} />
-          <div className="container">
-            <div className="row">
-              <div className="col-sm-12">
-                <Route exact path="/home" component={Home} />
-                <Route exact path="/shop" component={Shop} />
+          <div className='container'>
+            <div className='row'>
+              <div className='col-sm-12'>
+                <Route exact path='/home' component={Home} />
+                <Route exact path='/shop' component={Shop} />
               </div>
             </div>
           </div>
