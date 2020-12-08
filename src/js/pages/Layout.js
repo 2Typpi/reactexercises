@@ -1,14 +1,16 @@
 import React from "react";
 import { HashRouter, Route } from "react-router-dom";
+import { observer } from "mobx-react";
 
 //Selfmade Components
 import NavBar from "../components/NavBar";
 import Home from "./Home";
 import Shop from "./Shop";
 
-//import Styling
-import "../css/Layout.css";
+// Require scss files
+require("../../stylesheets/_all.scss");
 
+@observer
 export default class Layout extends React.Component {
   render() {
     return (

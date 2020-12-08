@@ -1,7 +1,12 @@
 {
-  "presets": ["module:metro-react-native-babel-preset"],
-  "plugins": [
-    ["@babel/plugin-proposal-decorators", { "legacy": true }], 
-    ["@babel/plugin-proposal-class-properties", { "loose" : true }]
-  ]
+  "env": {
+    "test": {
+      "presets":[
+        "env",
+        "stage-0",
+        "react"
+      ],
+      "plugins": ["react-html-attrs", "transform-decorators-legacy", "transform-class-properties"]
+    }
+  }
 }

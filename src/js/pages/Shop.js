@@ -1,16 +1,16 @@
 import React from "react";
 
 //Selfmade Components
-import ArticleCards from "../components/ArticleCard";
+import ArticleCard from "../";
 
 //Styling imports
-import "../css/Shop.css";
+require("../../stylesheets/_shop.scss");
 
 export default class Shop extends React.Component {
   render() {
     return (
       <div className='Shop'>
-        <ArticleCards />
+        <ArticleCard />
       </div>
     );
   }

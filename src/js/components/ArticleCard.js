@@ -6,10 +6,9 @@ import * as Icon from "react-bootstrap-icons";
 import { observer } from "mobx-react";
 
 //Image Imports
-import boots from "../images/Boots.png";
 
 //CSS Import
-import "../css/Shop.css";
+require("../../stylesheets/_shop.scss");
 
 @observer
 class ArticleCard extends Component {
