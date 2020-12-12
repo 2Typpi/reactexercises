@@ -37,7 +37,7 @@
     "react-router": "^4.3.1",
     "react-router-dom": "^4.3.1",
     "webpack": "^5.10.0",
-    "webpack-cli": "^4.2.0",
+    "webpack-dev-server": "^3.11.0",
     "whatwg-fetch": "^2.0.4"
   },
   "devDependencies": {
@@ -70,6 +70,7 @@
     "style-loader": "^0.19.1",
     "uglifyjs-webpack-plugin": "^2.0.1",
     "url-loader": "^0.6.2",
+    "webpack-cli": "^4.2.0",
     "webpack-dev-middleware": "^2.0.6",
     "webpack-hot-middleware": "^2.24.3"
   },

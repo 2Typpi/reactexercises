@@ -1,11 +1,10 @@
 import React, { Component } from "react";
-import Card from "react-bootstrap/Card";
-import Button from "react-bootstrap/Button";
-import ButtonGroup from "react-bootstrap/ButtonGroup";
+import { Card, Button, ButtonGroup } from "react-bootstrap";
 import * as Icon from "react-bootstrap-icons";
 import { observer } from "mobx-react";
 
 //Image Imports
+// import gemuese from '../../resources/Gemuese.jpg'
 
 //CSS Import
 require("../../stylesheets/_shop.scss");
@@ -45,7 +44,7 @@ class ArticleCard extends Component {
         <Card.Header>Bootstrap</Card.Header>
         <Card.Body>
           <Card.Title>The B</Card.Title>
-          <Card.Img variant='top' src={boots} />
+          {/* <Card.Img src={gemuese} ></Card.Img> */}
           <b>{"Menge: " + this.state.articleAmount + "  "}</b>
           <ButtonGroup size='sm'>
             <Button variant='light' onClick={this.Add.bind(this)}>
