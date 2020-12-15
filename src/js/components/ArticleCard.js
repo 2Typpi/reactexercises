@@ -3,11 +3,14 @@ import { Card, Button, ButtonGroup } from "react-bootstrap";
 import * as Icon from "react-bootstrap-icons";
 import { observer } from "mobx-react";
 
-//Image Imports
-// import gemuese from '../../resources/Gemuese.jpg'
+//Stores
+import cartStore from "../stores/ShopStore";
 
-//CSS Import
-require("../../stylesheets/_shop.scss");
+//Image Imports
+import gemuese from "../../resources/Gemuese.jpg";
+
+//Style Import
+import "../../stylesheets/shop.css";
 
 @observer
 class ArticleCard extends Component {
@@ -30,9 +33,21 @@ class ArticleCard extends Component {
     }
   }
 
-  PutIntoCart(e) {}
+  PutIntoCart(e) {
+    let amount = this.state.articleAmount;
+    console.log(amount);
+    cartStore.addToShoppingCart(amount);
+  }
 
   render() {
+    const cartEdit = {
+      marginLeft: "5px",
+    };
+
+    const cardButtons = {
+      marginTop: "5px",
+    };
+
     return (
       <Card
         bg={"dark"}
@@ -41,33 +56,35 @@ class ArticleCard extends Component {
         style={{ width: "18rem" }}
         className='mb-2'
       >
-        <Card.Header>Bootstrap</Card.Header>
+        <Card.Header>Gemüse</Card.Header>
         <Card.Body>
-          <Card.Title>The B</Card.Title>
-          {/* <Card.Img src={gemuese} ></Card.Img> */}
+          <Card.Title>Das Gemüse</Card.Title>
+          <Card.Img src={gemuese}></Card.Img>
           <b>{"Menge: " + this.state.articleAmount + "  "}</b>
-          <ButtonGroup size='sm'>
-            <Button variant='light' onClick={this.Add.bind(this)}>
-              <Icon.Plus />
-            </Button>
+          <ButtonGroup size='sm' style={cardButtons}>
             <Button variant='light' onClick={this.Subtract.bind(this)}>
               <Icon.Dash />
             </Button>
+            <Button variant='light' onClick={this.Add.bind(this)}>
+              <Icon.Plus />
+            </Button>
+            <Button
+              className='cartEdit'
+              style={cartEdit}
+              variant='outline-primary'
+              onClick={this.PutIntoCart.bind(this)}
+            >
+              <Icon.Cart />
+            </Button>
+            <Button
+              className='cartEdit'
+              style={cartEdit}
+              variant='outline-danger'
+              onClick={this.Add.bind(this)}
+            >
+              <Icon.X />
+            </Button>
           </ButtonGroup>
-          <Button
-            className='cartEdit'
-            variant='outline-primary'
-            onClick={this.PutIntoCart.bind(this)}
-          >
-            <Icon.Cart />
-          </Button>
-          <Button
-            className='cartEdit'
-            variant='outline-danger'
-            onClick={this.Add.bind(this)}
-          >
-            <Icon.X />
-          </Button>
         </Card.Body>
       </Card>
     );

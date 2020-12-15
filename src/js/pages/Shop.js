@@ -4,7 +4,7 @@ import React from "react";
 import ArticleCard from "../components/ArticleCard";
 
 //Styling imports
-require("../../stylesheets/_shop.scss");
+import "../../stylesheets/shop.css";
 
 export default class Shop extends React.Component {
   render() {

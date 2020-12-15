@@ -4,24 +4,26 @@ import Nav from "react-bootstrap/Nav";
 import { Link } from "react-router-dom";
 import { observer } from "mobx-react";
 
+//Store imports
+import shopStore from "../stores/ShopStore";
+
 @observer
 class NavBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
       key: "Home",
-      amount: 0,
     };
   }
 
   handleItemClick(e) {
     this.setState({
       key: e,
-      amount: this.amount,
     });
   }
 
   render() {
+    const { amountInCart } = shopStore;
     const { key } = this.state;
     return (
       <Navbar bg='dark' variant='dark' expand='lg'>
@@ -51,8 +53,8 @@ class NavBar extends Component {
               Shop
             </Nav.Link>
           </Nav>
+          <Navbar.Text>{"Items in Cart: " + amountInCart}</Navbar.Text>
         </Navbar.Collapse>
-        <Navbar.Text>{"Items in Cart: " + this.state.amount}</Navbar.Text>
       </Navbar>
     );
   }

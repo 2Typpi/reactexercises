@@ -8,16 +8,19 @@ import Home from "./Home";
 import Shop from "./Shop";
 
 // Require scss files
-require("../../stylesheets/_all.scss");
+import "../../stylesheets/all.css";
 
 @observer
 export default class Layout extends React.Component {
   render() {
+    const container = {
+      marginTop: "15px",
+    };
     return (
       <HashRouter>
         <div>
           <NavBar location={window.location} />
-          <div className='container'>
+          <div className='container' style={container}>
             <div className='row'>
               <div className='col-sm-12'>
                 <Route exact path='/home' component={Home} />
