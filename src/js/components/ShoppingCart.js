@@ -6,6 +6,7 @@ class ShoppingCart extends Component {
     super(props);
   }
 
+  //JSON mit Name, Price, imgSrc geteilt mit dem Shop
   render() {
     return (
       <Card>
