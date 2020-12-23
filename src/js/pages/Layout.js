@@ -6,6 +6,7 @@ import { observer } from "mobx-react";
 import NavBar from "../components/NavBar";
 import Home from "./Home";
 import Shop from "./Shop";
+import Cart from "./Cart";
 
 // Require scss files
 import "../../stylesheets/all.css";
@@ -23,8 +24,10 @@ export default class Layout extends React.Component {
           <div className='container' style={container}>
             <div className='row'>
               <div className='col-sm-12'>
+                <Route exact path='/' component={Home} />
                 <Route exact path='/home' component={Home} />
                 <Route exact path='/shop' component={Shop} />
+                <Route exact path='/cart' component={Cart} />
               </div>
             </div>
           </div>

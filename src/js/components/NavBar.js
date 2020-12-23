@@ -1,11 +1,8 @@
 import React, { Component } from "react";
-import { Navbar, Nav, NavDropdown } from "react-bootstrap";
+import { Navbar, Nav } from "react-bootstrap";
 import * as Icon from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
 import { observer } from "mobx-react";
-
-//Component imports
-import ShoppingCart from "./ShoppingCart";
 
 //Store imports
 import shopStore from "../stores/ShopStore";
@@ -29,39 +26,49 @@ class NavBar extends Component {
     const { amountInCart } = shopStore;
     const { key } = this.state;
     return (
-      <Navbar bg="dark" variant="dark" expand="lg">
+      <Navbar bg='dark' variant='dark' expand='lg'>
         <Navbar.Brand>My Own Store</Navbar.Brand>
-        <Navbar.Toggle aria-controls="basic-navbar-nav" />
-        <Navbar.Collapse id="basic-navbar-nav">
+        <Navbar.Toggle aria-controls='basic-navbar-nav' />
+        <Navbar.Collapse id='basic-navbar-nav'>
           <Nav
-            variant="pills"
-            className="mr-auto"
-            activeKey="Home"
+            variant='pills'
+            className='mr-auto'
+            activeKey='Home'
             onSelect={this.handleItemClick.bind(this)}
           >
             <Nav.Link
               as={Link}
-              to="/home"
+              to='/home'
               active={key === "Home"}
-              eventKey="Home"
+              eventKey='Home'
             >
               Home
             </Nav.Link>
             <Nav.Link
               as={Link}
-              to="/shop"
+              to='/shop'
               active={key === "Shop"}
-              eventKey="Shop"
+              eventKey='Shop'
             >
               Shop
             </Nav.Link>
           </Nav>
+          <Nav
+            variant='pills'
+            className='justify-content-end'
+            onSelect={this.handleItemClick.bind(this)}
+          >
+            <Nav.Link
+              as={Link}
+              to='/cart'
+              active={key === "Cart"}
+              eventKey='Cart'
+            >
+              <a>Items in Cart: {amountInCart} </a>
+              <Icon.Cart />
+            </Nav.Link>
+          </Nav>
         </Navbar.Collapse>
-        <Nav className="justify-content-end">
-          <NavDropdown title={"Items in Cart: " + amountInCart}>
-            <ShoppingCart />
-          </NavDropdown>
-        </Nav>
       </Navbar>
     );
   }
