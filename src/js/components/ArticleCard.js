@@ -16,26 +16,28 @@ import "../../stylesheets/shop.css";
 class ArticleCard extends Component {
   constructor(props) {
     super(props);
-    this.state = { articleAmount: 0 };
+    this.state = { articleAmount: 1 };
   }
 
-  Add(e) {
+  add(e) {
     let amount = this.state.articleAmount + 1;
     this.setState({ articleAmount: amount });
   }
 
-  Subtract(e) {
+  subtract(e) {
     let amount = this.state.articleAmount - 1;
-    if (amount > 0) {
+    if (amount > 1) {
       this.setState({ articleAmount: amount });
     } else {
-      this.setState({ articleAmount: 0 });
+      this.setState({ articleAmount: 1 });
     }
   }
 
-  PutIntoCart(e) {
+  putIntoCart(e) {
     let amount = this.state.articleAmount;
-    shopStore.addToShoppingCart(amount, this.props.articleCardList);
+    if (amount > 0) {
+      shopStore.addToShoppingCart(amount, this.props.articleCardList);
+    }
   }
 
   render() {
@@ -54,7 +56,6 @@ class ArticleCard extends Component {
         text={"light"}
         style={{ width: "18rem" }}
       >
-        {/*         <Card.Header>Gemüse</Card.Header> */}
         <Card.Body>
           <Card.Title>{this.props.articleCardList.name}</Card.Title>
           <Card.Img src={gemuese}></Card.Img>
@@ -67,17 +68,17 @@ class ArticleCard extends Component {
               this.props.articleCardList.priceValue}
           </b>
           <ButtonGroup size='sm' style={cardButtons}>
-            <Button variant='light' onClick={this.Subtract.bind(this)}>
+            <Button variant='light' onClick={this.subtract.bind(this)}>
               <Icon.Dash />
             </Button>
-            <Button variant='light' onClick={this.Add.bind(this)}>
+            <Button variant='light' onClick={this.add.bind(this)}>
               <Icon.Plus />
             </Button>
             <Button
               className='cartEdit'
               style={cartEdit}
               variant='outline-primary'
-              onClick={this.PutIntoCart.bind(this)}
+              onClick={this.putIntoCart.bind(this)}
             >
               <Icon.Cart />
             </Button>

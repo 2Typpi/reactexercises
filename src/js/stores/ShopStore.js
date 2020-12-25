@@ -5,8 +5,26 @@ class ShopStore {
   @observable itemsInCart = [];
 
   @action addToShoppingCart(count, article) {
+    let isItemInCart = this.itemsInCart.find(
+      (element) => element.article.id === article.id
+    );
     this.amountInCart += count;
-    this.itemsInCart.push({ count, article });
+    if (isItemInCart === undefined) {
+      // Article is not in Cart yet
+      this.itemsInCart.push({ count, article });
+    } else {
+      // Article is already in Cart
+      let indexInCart = this.itemsInCart.indexOf(isItemInCart);
+      this.itemsInCart[indexInCart].count += count;
+    }
+  }
+
+  @action removeFromCart(article) {
+    let indexOfDelete = this.itemsInCart.indexOf(article);
+    if (indexOfDelete >= 0) {
+      this.itemsInCart.splice(indexOfDelete, 1);
+      this.amountInCart -= article.count;
+    }
   }
 }
 

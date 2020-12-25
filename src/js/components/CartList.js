@@ -1,13 +1,23 @@
+import { observer } from "mobx-react";
 import React, { Component } from "react";
-import { ListGroup, Figure } from "react-bootstrap";
+import { ListGroup, Figure, Button } from "react-bootstrap";
+import * as Icon from "react-bootstrap-icons";
+
+//Stores
+import shopStore from "../stores/ShopStore";
 
 //Image imports
 import Gemuese from "../../resources/Gemuese.jpg";
 
+@observer
 class CartList extends Component {
   constructor(props) {
     super(props);
-    console.log(props.article);
+  }
+
+  deleteFromCart(e) {
+    console.log(this.props.article);
+    shopStore.removeFromCart(this.props.article);
   }
 
   render() {
@@ -23,6 +33,9 @@ class CartList extends Component {
             />
           </Figure>
           {this.props.article.article.name + " " + this.props.article.count}
+          <Button variant='danger' onClick={this.deleteFromCart.bind(this)}>
+            <Icon.Dash />
+          </Button>
         </ListGroup.Item>
       </ListGroup>
     );
