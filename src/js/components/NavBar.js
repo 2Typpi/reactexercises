@@ -36,20 +36,10 @@ class NavBar extends Component {
             activeKey='Home'
             onSelect={this.handleItemClick.bind(this)}
           >
-            <Nav.Link
-              as={Link}
-              to='/home'
-              active={key === "Home"}
-              eventKey='Home'
-            >
+            <Nav.Link as={Link} to='/home' active={key === "Home"} eventKey='Home'>
               Home
             </Nav.Link>
-            <Nav.Link
-              as={Link}
-              to='/shop'
-              active={key === "Shop"}
-              eventKey='Shop'
-            >
+            <Nav.Link as={Link} to='/shop' active={key === "Shop"} eventKey='Shop'>
               Shop
             </Nav.Link>
           </Nav>
@@ -58,14 +48,11 @@ class NavBar extends Component {
             className='justify-content-end'
             onSelect={this.handleItemClick.bind(this)}
           >
-            <Nav.Link
-              as={Link}
-              to='/cart'
-              active={key === "Cart"}
-              eventKey='Cart'
-            >
-              <a>Items in Cart: {amountInCart} </a>
-              <Icon.Cart />
+            <Nav.Link as={Link} to='/cart' active={key === "Cart"} eventKey='Cart'>
+              <div>
+                Items in Cart: {amountInCart}
+                <Icon.Cart />
+              </div>
             </Nav.Link>
           </Nav>
         </Navbar.Collapse>
