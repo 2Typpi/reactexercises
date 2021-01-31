@@ -1,0 +1,25 @@
+.card-img {
+  display: block;
+  margin: 0 auto 10px;
+  height: 200px;
+}
+
+.price-box {
+  position: relative;
+  padding-top: 5px;
+  margin-top: 15px;
+}
+
+.cart-button {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
+
+.amountInputPiece {
+  width: 73%;
+}
+
+.amountInputWeigh {
+  width: 85%;
+}

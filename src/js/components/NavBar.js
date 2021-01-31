@@ -4,8 +4,12 @@ import * as Icon from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
 import { observer } from "mobx-react";
 
+//Helper imports
+import { removeTokenFromStorage } from "../helper/util";
+
 //Store imports
 import shopStore from "../stores/ShopStore";
+import userStore from "../stores/userStore";
 
 @observer
 class NavBar extends Component {
@@ -43,6 +47,21 @@ class NavBar extends Component {
               Shop
             </Nav.Link>
           </Nav>
+          {userStore.userFromServer === null ? (
+            <div></div>
+          ) : (
+            <Nav variant='pills' className='justify-content-end'>
+              <Nav.Link
+                as={Link}
+                to='/order'
+                active={key === "Order"}
+                eventKey='Order'
+                onSelect={this.handleItemClick.bind(this)}
+              >
+                Bestellungen
+              </Nav.Link>
+            </Nav>
+          )}
           <Nav
             variant='pills'
             className='justify-content-end'
@@ -55,6 +74,31 @@ class NavBar extends Component {
               </div>
             </Nav.Link>
           </Nav>
+          {userStore.userFromServer === null ? (
+            <Nav
+              variant='pills'
+              className='justify-content-end'
+              onSelect={this.handleItemClick.bind(this)}
+            >
+              <Nav.Link as={Link} to='/login' active={key === "Login"} eventKey='Login'>
+                Login
+              </Nav.Link>
+            </Nav>
+          ) : (
+            <Nav
+              variant='pills'
+              className='justify-content-end'
+              onSelect={() => {
+                removeTokenFromStorage();
+                userStore.user = null;
+                this.setState({});
+              }}
+            >
+              <Nav.Link as={Link} to='/login' active={false} eventKey='Login'>
+                Logout
+              </Nav.Link>
+            </Nav>
+          )}
         </Navbar.Collapse>
       </Navbar>
     );

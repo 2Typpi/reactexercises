@@ -1,0 +1,10 @@
+.mediaItem {
+  border: 1px solid lightgray;
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.mediaItemButtons {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}

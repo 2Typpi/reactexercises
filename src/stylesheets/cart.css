@@ -1,0 +1,10 @@
+.priceContainer {
+  position: relative;
+}
+
+.buyNow {
+  margin-top: 10px;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+}
