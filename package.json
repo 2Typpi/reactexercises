@@ -4,7 +4,7 @@
   "description": "A seed project for react js apps",
   "main": "client.js",
   "scripts": {
-    "dev": "webpack serve --config webpack.config.debug.js --content-base dev --inline --hot --host 0.0.0.0 --public 192.168.2.122:8080",
+    "dev": "webpack serve --config webpack.config.debug.js --content-base dev --inline --hot",
     "build:prod": "webpack -p --progress --config webpack.config.js",
     "build:dev": "webpack --config webpack.config.debug.js",
     "test": "jest",
