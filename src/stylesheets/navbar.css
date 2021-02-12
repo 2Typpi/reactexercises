@@ -1,0 +1,18 @@
+.navbar-all {
+  background-color: #68a94a;
+}
+
+.navbar-brand {
+  color: white;
+}
+
+.nav-pills .nav-link.active,
+.nav-pills .show > .nav-link {
+  color: #fff;
+  background-color: green;
+}
+
+.logo {
+  width: 50px;
+  height: 30px;
+}

@@ -15,32 +15,31 @@ body {
   min-height: 100vh;
   display: flex;
   font-weight: 400;
+  font-size: 1.1rem;
   font-family: sans-serif;
-  /*   background: rgb(18, 184, 23);
-  background: -moz-linear-gradient(
-    90deg,
-    rgba(18, 184, 23, 0.55) 0%,
-    rgba(18, 184, 23, 0.798739564185049) 50%,
-    rgba(18, 184, 23, 0.55) 100%
-  );
-  background: -webkit-linear-gradient(
-    90deg,
-    rgba(18, 184, 23, 0.55) 0%,
-    rgba(18, 184, 23, 0.798739564185049) 50%,
-    rgba(18, 184, 23, 0.55) 100%
-  );
-  background: linear-gradient(
-    90deg,
-    rgba(18, 184, 23, 0.55) 0%,
-    rgba(18, 184, 23, 0.798739564185049) 50%,
-    rgba(18, 184, 23, 0.55) 100%
-  );
-  filter: progid:DXImageTransform.Microsoft.gradient(startColorstr="#12b817",endColorstr="#12b817",GradientType=1); */
 }
 
 .container {
-  margin-top: 15px;
+  margin-top: 70px;
   color: #101010;
   overflow: hidden;
   width: 100%;
+}
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type="number"] {
+  -moz-appearance: textfield;
+}
+
+.input-group-text {
+  background-color: #68a94a;
+  border-color: #68a94a;
+  color: white;
 }

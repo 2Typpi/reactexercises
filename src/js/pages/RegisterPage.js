@@ -1,5 +1,5 @@
 import React from "react";
-import { Form, Button, Col, Spinner } from "react-bootstrap";
+import { Form, Button, Col, Spinner, Alert } from "react-bootstrap";
 import { observer } from "mobx-react";
 import { observable } from "mobx";
 
@@ -54,12 +54,12 @@ class RegisterPage extends React.Component {
       lastName: "",
       username: "",
       password: "",
+      passwordRepeat: "",
       email: "",
       street: "",
       houseNumber: "",
       PLZ: "",
       city: "",
-      passwordRepeat: "",
     };
   }
 
@@ -98,29 +98,38 @@ class RegisterPage extends React.Component {
     } else if (!this.isUnique) {
       alert("Benutzername oder E-Mail sind bereits vergeben!");
     } else {
-      userStore.registerUser(this.user);
+      const clone = JSON.parse(JSON.stringify(this.user));
+      userStore.registerUser(clone);
       this.loading = false;
     }
   }
 
+  toggleToast() {
+    this.registerError = false;
+    userStore.registerRequestError = false;
+  }
+
   handleChange(prop, e) {
-    this.loginError = false;
+    this.registerError = false;
+    userStore.registerRequestError = false;
     this.user[prop] = e.target.value;
   }
 
-  //TODO Validation
   render() {
+    let error = userStore.registerRequestError;
     return (
       <div className='outer'>
         <div className='innerRegister'>
-          <Form noValidate validated={this.loginError} onSubmit={this.register.bind(this)}>
+          <Form>
             <Form.Row>
               <Col>
                 <Form.Group controlId='formGridFirstName'>
                   <Form.Label>Vorname</Form.Label>
                   <Form.Control
+                    required
                     type='text'
                     placeholder='Vorname'
+                    isInvalid={this.user.firstName === "" && this.registerError}
                     value={this.user.firstName}
                     onChange={this.handleChange.bind(this, "firstName")}
                   />
@@ -130,8 +139,10 @@ class RegisterPage extends React.Component {
                 <Form.Group controlId='formGridLastName'>
                   <Form.Label>Nachname</Form.Label>
                   <Form.Control
+                    required
                     type='text'
                     placeholder='Nachname'
+                    isInvalid={this.user.lastName === "" && this.registerError}
                     value={this.user.lastName}
                     onChange={this.handleChange.bind(this, "lastName")}
                   />
@@ -141,7 +152,10 @@ class RegisterPage extends React.Component {
                 <Form.Group controlId='formGridUsername'>
                   <Form.Label>Benutzername</Form.Label>
                   <Form.Control
+                    required
                     type='text'
+                    isValid={false}
+                    isInvalid={error || (this.user.username === "" && this.registerError)}
                     placeholder='Benutzername'
                     value={this.user.username}
                     onChange={this.handleChange.bind(this, "username")}
@@ -155,6 +169,8 @@ class RegisterPage extends React.Component {
                 <Form.Group controlId='formGridEmail'>
                   <Form.Label>E-Mail-Adresse</Form.Label>
                   <Form.Control
+                    required
+                    isInvalid={error || (this.user.email === "" && this.registerError)}
                     type='email'
                     placeholder='E-Mail-Adresse'
                     value={this.user.email}
@@ -166,6 +182,8 @@ class RegisterPage extends React.Component {
                 <Form.Group controlId='formGridPassword'>
                   <Form.Label>Passwort</Form.Label>
                   <Form.Control
+                    required
+                    isInvalid={this.user.password === "" && this.registerError}
                     type='password'
                     placeholder='Passwort'
                     value={this.user.password}
@@ -177,9 +195,11 @@ class RegisterPage extends React.Component {
                 <Form.Group controlId='formGridPasswordRepeat'>
                   <Form.Label>Passwort Wiederholen</Form.Label>
                   <Form.Control
+                    required
+                    isInvalid={this.user.passwordRepeat === "" && this.registerError}
                     type='password'
                     placeholder='Passwort'
-                    value={this.user.passwordRepeat}
+                    value={this.user.passwordRepeat || ""}
                     onChange={this.handleChange.bind(this, "passwordRepeat")}
                   />
                 </Form.Group>
@@ -191,6 +211,8 @@ class RegisterPage extends React.Component {
                 <Form.Group controlId='formGridAddress'>
                   <Form.Label>Straße</Form.Label>
                   <Form.Control
+                    required
+                    isInvalid={this.user.street === "" && this.registerError}
                     type='text'
                     placeholder='Straße'
                     value={this.user.street}
@@ -202,6 +224,8 @@ class RegisterPage extends React.Component {
                 <Form.Group controlId='formGridHousenumber'>
                   <Form.Label>Hausnummer</Form.Label>
                   <Form.Control
+                    required
+                    isInvalid={this.user.houseNumber === "" && this.registerError}
                     type='text'
                     placeholder='Hausnummer'
                     value={this.user.houseNumber}
@@ -216,6 +240,8 @@ class RegisterPage extends React.Component {
                 <Form.Group controlId='formGridCity'>
                   <Form.Label>Stadt</Form.Label>
                   <Form.Control
+                    required
+                    isInvalid={this.user.city === "" && this.registerError}
                     type='text'
                     placeholder='Stadt'
                     value={this.user.city}
@@ -228,6 +254,8 @@ class RegisterPage extends React.Component {
                 <Col>
                   <Form.Label>PLZ</Form.Label>
                   <Form.Control
+                    required
+                    isInvalid={this.user.PLZ === "" && this.registerError}
                     type='text'
                     placeholder='Postleitzahl'
                     value={this.user.PLZ}
@@ -243,12 +271,23 @@ class RegisterPage extends React.Component {
                 <span className='sr-only'>Loading...</span>
               </Button>
             ) : (
-              <Button variant='dark' type='submit'>
+              <Button
+                variant='dark'
+                className='registerPage-button'
+                onClick={this.register.bind(this)}
+              >
                 Registrieren
               </Button>
             )}
           </Form>
         </div>
+        {error || this.registerError ? (
+          <Alert variant='danger' dismissible={true} onClose={this.toggleToast.bind(this)}>
+            Benutzername oder E-Mail sind bereits vergeben oder ein Feld fehlt!
+          </Alert>
+        ) : (
+          <div></div>
+        )}
       </div>
     );
   }

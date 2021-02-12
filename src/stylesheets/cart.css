@@ -5,6 +5,17 @@
 .buyNow {
   margin-top: 10px;
   position: absolute;
+  background-color: #68a94a;
+  border-color: #68a94a;
   bottom: 0;
   right: 0;
+}
+
+.buyNow:hover {
+  background-color: green;
+  border-color: green;
+}
+
+.emptyCart {
+  color: gray;
 }

@@ -15,6 +15,8 @@ class UserStore {
   @observable user = null;
   @observable loading = false;
   @observable error = false;
+  @observable loginRequestError = false;
+  @observable registerRequestError = false;
 
   @computed get userFromServer() {
     if (this.user === null) {
@@ -42,7 +44,7 @@ class UserStore {
             this.users = json;
           });
         } else {
-          loginPage.loginError = true;
+          this.loginRequestError = true;
         }
       })
       .catch((error) => {
@@ -77,10 +79,12 @@ class UserStore {
               setTokenLocalStorage(json.token);
               setUserToLocalStorage(json);
               this.user = json;
+              history.replace("#/shop");
+              history.go();
             });
           } else {
             removeTokenFromStorage();
-            loginPage.loginError = true;
+            this.loginRequestError = true;
             this.user = null;
           }
         })
@@ -121,18 +125,18 @@ class UserStore {
               this.user = json;
             });
           } else {
-            //TODO: Alert?
+            this.registerRequestError = true;
             removeTokenFromStorage();
             this.error = true;
             this.user = null;
           }
         })
         .catch((error) => {
-          //TODO: Alert?
           removeTokenFromStorage();
           this.loading = false;
           this.error = true;
           this.user = null;
+          alert("Die Server sind derzeit nicht erreichbar. Versuchen sie es später noch einmal.");
           throw error;
         });
     }

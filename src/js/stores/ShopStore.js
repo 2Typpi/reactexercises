@@ -33,6 +33,15 @@ class ShopStore {
     this.itemsInCart = [];
   }
 
+  @action updateAmountInCart(article, count) {
+    let isItemInCart = this.itemsInCart.find((element) => element.article.id === article.id);
+
+    if (isItemInCart !== undefined) {
+      let indexInCart = this.itemsInCart.indexOf(isItemInCart);
+      this.itemsInCart[indexInCart].count = count;
+    }
+  }
+
   /**
    * Adds Articles to the Cart
    *

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Card, Button, Toast } from "react-bootstrap";
+import { Card, Button, Toast, InputGroup, FormControl } from "react-bootstrap";
 import * as Icon from "react-bootstrap-icons";
 import { observer } from "mobx-react";
 
@@ -56,30 +56,29 @@ class ArticleCard extends Component {
               src={config.BASE_URL + "images/" + this.props.articleCardList.imgSrc + ".jpg"}
             />
             {this.props.articleCardList.priceValue === "Kilopreis" ? (
-              <div class='input-group'>
-                <input
+              <InputGroup>
+                <FormControl
                   className='amountInputWeigh'
                   type='number'
                   placeholder='100'
                   onChange={this.updateInput.bind(this)}
                 />
-
-                <div class='input-group-append'>
-                  <span class='input-group-text'> g </span>
-                </div>
-              </div>
+                <InputGroup.Append>
+                  <InputGroup.Text variant='success'> g </InputGroup.Text>
+                </InputGroup.Append>
+              </InputGroup>
             ) : (
-              <div class='input-group'>
-                <input
+              <InputGroup>
+                <FormControl
                   className='amountInputPiece'
                   type='number'
                   placeholder='1'
                   onChange={this.updateInput.bind(this)}
                 />
-                <div class='input-group-append'>
-                  <span class='input-group-text'> Stück </span>
-                </div>
-              </div>
+                <InputGroup.Append>
+                  <InputGroup.Text variant='success'> Stück </InputGroup.Text>
+                </InputGroup.Append>
+              </InputGroup>
             )}
             <div className='price-box'>
               <b>{priceDisplay + "€ " + this.props.articleCardList.priceValue}</b>

@@ -1,6 +1,7 @@
 import { observer } from "mobx-react";
 import React from "react";
 import { Button, Alert, Row, Col, Container } from "react-bootstrap";
+import * as Icon from "react-bootstrap-icons";
 
 //Stores
 import shopStore from "../stores/ShopStore";
@@ -68,11 +69,21 @@ class Cart extends React.Component {
       let halfLength = Math.ceil(cart.length / 2);
       leftSide = cart.slice(0, halfLength);
       rightSide = cart.slice(halfLength, cart.length);
+    } else {
+      leftSide = (
+        <p className='emptyCart'>
+          Ihr Warenkorb
+          <Icon.Cart /> ist derzeit leer!
+        </p>
+      );
     }
 
     return (
       <div>
-        <h4>Ihr Warenkorb</h4>
+        <h4>
+          Ihr Warenkorb
+          <Icon.Cart />
+        </h4>
         <Container>
           <Row>
             <Col sm={12} md={12} lg={6} xl={6}>

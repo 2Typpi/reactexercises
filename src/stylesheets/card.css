@@ -12,14 +12,23 @@
 
 .cart-button {
   position: absolute;
+  background-color: #68a94a;
+  border-color: #68a94a;
   bottom: 0;
   right: 0;
 }
 
+.cart-button:hover {
+  background-color: green;
+  border-color: green;
+}
+
 .amountInputPiece {
+  border-color: #68a94a;
   width: 73%;
 }
 
 .amountInputWeigh {
+  border-color: #68a94a;
   width: 85%;
 }

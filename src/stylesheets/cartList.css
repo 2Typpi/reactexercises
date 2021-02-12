@@ -1,10 +1,20 @@
 .mediaItem {
   border: 1px solid lightgray;
   padding-top: 5px;
-  padding-bottom: 5px;
+  margin-bottom: 10px;
 }
 
 .mediaItemButtons {
   padding-top: 5px;
   padding-bottom: 5px;
+}
+
+.cartImage {
+  display: block;
+  margin: 0 auto 10px;
+  height: 100px;
+}
+
+.input-group-cart {
+  width: 80%;
 }

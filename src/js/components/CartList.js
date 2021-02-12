@@ -1,6 +1,6 @@
 import { observer } from "mobx-react";
 import React, { Component } from "react";
-import { ListGroup, Figure, Button, Media, Row, Col } from "react-bootstrap";
+import { InputGroup, Figure, Button, Media, Row, Col, FormControl } from "react-bootstrap";
 import * as Icon from "react-bootstrap-icons";
 
 // config
@@ -19,7 +19,6 @@ import "../../stylesheets/cartList.css";
 class CartList extends Component {
   constructor(props) {
     super(props);
-    console.log(this.props);
     switch (props.article.article.priceValue) {
       case PriceValues.PIECE:
         props.article.article.priceValue = "Stückpreis";
@@ -34,29 +33,81 @@ class CartList extends Component {
     shopStore.removeFromCart(this.props.article);
   }
 
+  updateInput(e) {
+    let number = Number.parseFloat(e.target.value);
+    shopStore.updateAmountInCart(this.props.article.article, number);
+  }
+
+  createCountComponent() {
+    let component;
+
+    if (this.props.article.article.priceValue === "Kilopreis") {
+      if (this.props.isOrder) {
+        component = (
+          <div>
+            <b>{this.props.article.count + "g"}</b>
+          </div>
+        );
+      } else {
+        component = (
+          <InputGroup className='input-group-cart'>
+            <FormControl
+              type='number'
+              value={this.props.article.count}
+              onChange={this.updateInput.bind(this)}
+            />
+            <InputGroup.Append>
+              <InputGroup.Text variant='success'> g </InputGroup.Text>
+            </InputGroup.Append>
+          </InputGroup>
+        );
+      }
+    } else {
+      if (this.props.isOrder) {
+        component = (
+          <div>
+            <b>{this.props.article.count + "Stück"}</b>
+          </div>
+        );
+      } else {
+        component = (
+          <InputGroup className='input-group-cart'>
+            <FormControl
+              type='number'
+              value={this.props.article.count}
+              onChange={this.updateInput.bind(this)}
+            />
+            <InputGroup.Append>
+              <InputGroup.Text variant='success'> Stück </InputGroup.Text>
+            </InputGroup.Append>
+          </InputGroup>
+        );
+      }
+    }
+    return component;
+  }
+
   render() {
-    console.log(this.props.article);
+    const countComponent = this.createCountComponent();
+
     return (
       <div>
         <Media className='mediaItem'>
           <Figure.Image
-            width={171}
-            height={180}
+            className='cartImage'
             alt=''
             src={config.BASE_URL + "images/" + this.props.article.article.imgSrc + ".jpg"}
           />
           <Media.Body className='mediaBody'>
             <h4>{this.props.article.article.name}</h4>
             <Row>
-              <Col xs={5}>
+              <Col xs={5} xl={6}>
                 <strong>
                   {this.props.article.article.price + "€ " + this.props.article.article.priceValue}
                 </strong>
               </Col>
-              <Col xs={6}>
-                {this.props.article.article.priceValue === "Kilopreis"
-                  ? "Menge: " + this.props.article.count + " Gramm"
-                  : "Menge: " + this.props.article.count + " Stück"}
+              <Col xs={7} xl={6}>
+                {countComponent}
               </Col>
             </Row>
             {this.props.isOrder ? (
@@ -65,7 +116,7 @@ class CartList extends Component {
               <Row className='mediaItemButtons'>
                 <Col xs={3}>
                   <Button variant='danger' size='sm' onClick={this.deleteFromCart.bind(this)}>
-                    Delete
+                    Entfernen
                   </Button>
                 </Col>
               </Row>

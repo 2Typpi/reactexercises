@@ -19,7 +19,7 @@ class Home extends React.Component {
             <Col sm={12} md={12} lg={8} xl={8}>
               <h2 className='openingHeader'>Neue Öffnungszeiten</h2> <hr />{" "}
               <h2 className='openingHeader'>
-                von Montag bis Samstag <br /> 09:00 bis 13:00 und 15 bis 19:00 Uhr
+                von Montag bis Samstag <br /> 09:00 bis 13:00 und 15:00 bis 19:00 Uhr
               </h2>
               <p>
                 Wir bitten um Ihr Verständnis für unsere neuen Öffnungszeiten, um uns und unsere

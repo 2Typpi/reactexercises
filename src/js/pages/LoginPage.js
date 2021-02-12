@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Button, Alert } from "react-bootstrap";
 import { observer } from "mobx-react";
-import { observable } from "mobx";
+import { action, observable } from "mobx";
 
 import history from "../helper/browserHistory";
 
@@ -54,21 +54,18 @@ class LoginPage extends React.Component {
     }
   }
 
-  toggleToast() {
-    this.loginError = false;
-  }
-
   handleChange(prop, e) {
     this.loginError = false;
+    userStore.loginRequestError = false;
     this.user[prop] = e.target.value;
   }
 
   render() {
-    console.log(this.loginError);
+    let error = userStore.loginRequestError;
     return (
       <div className='outer'>
         <div className='innerLogin'>
-          <Form noValidate onSubmit={this.login.bind(this)}>
+          <Form>
             <Form.Group>
               <Form.Label>Username</Form.Label>
               <Form.Control
@@ -76,6 +73,7 @@ class LoginPage extends React.Component {
                 type='text'
                 required
                 placeholder='Username'
+                isInvalid={error}
                 onChange={this.handleChange.bind(this, "username")}
               />
               <Form.Control.Feedback type='invalid'>
@@ -90,6 +88,7 @@ class LoginPage extends React.Component {
                 type='password'
                 placeholder='Passwort'
                 value={this.user.password}
+                isInvalid={error}
                 onChange={this.handleChange.bind(this, "password")}
               />
               <Form.Control.Feedback type='invalid'>
@@ -98,7 +97,7 @@ class LoginPage extends React.Component {
             </Form.Group>
             <div className='buttonBox'>
               {this.loading ? (
-                <Button variant='dark' disabled>
+                <Button disabled>
                   <Spinner
                     as='span'
                     animation='border'
@@ -109,23 +108,16 @@ class LoginPage extends React.Component {
                   <span className='sr-only'>Loading...</span>
                 </Button>
               ) : (
-                <Button variant='dark' type='submit'>
+                <Button variant='dark' className='login-button' onClick={this.login.bind(this)}>
                   Login
                 </Button>
               )}
-              <Button variant='dark' className='registerButton' href='#/register'>
+              <Button variant='dark' className='register-button' href='#/register'>
                 Registieren
               </Button>
             </div>
           </Form>
         </div>
-        {this.loginError ? (
-          <Alert variant='danger' dismissible={true} onClose={this.toggleToast.bind(this)}>
-            Passwort oder Benutzername ist falsch
-          </Alert>
-        ) : (
-          <div></div>
-        )}
       </div>
     );
   }

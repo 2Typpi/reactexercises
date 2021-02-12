@@ -10,7 +10,6 @@
   min-width: 300px;
   margin: auto;
   background: #ffffff;
-  box-shadow: 0px 14px 80px rgba(34, 35, 58, 0.2);
   padding: 40px 55px 45px 55px;
   border-radius: 15px;
   transition: all 0.3s;
@@ -20,8 +19,30 @@
   position: relative;
 }
 
-.registerButton {
+.login-button {
+  background-color: #68a94a;
+  border-color: #68a94a;
+}
+
+.login-button:focus {
+  background-color: green;
+  border-color: green;
+}
+
+.login-button:hover {
+  background-color: green;
+  border-color: green;
+}
+
+.register-button {
+  background-color: #68a94a;
+  border-color: #68a94a;
   position: absolute;
   bottom: 0;
   right: 0;
+}
+
+.register-button:hover {
+  background-color: green;
+  border-color: green;
 }

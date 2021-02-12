@@ -1,8 +1,11 @@
 import React, { Component } from "react";
-import { Navbar, Nav } from "react-bootstrap";
+import { Navbar, Nav, Figure } from "react-bootstrap";
 import * as Icon from "react-bootstrap-icons";
 import { Link } from "react-router-dom";
 import { observer } from "mobx-react";
+
+// config
+import config from "../../config/main.config";
 
 //Helper imports
 import { removeTokenFromStorage } from "../helper/util";
@@ -10,6 +13,9 @@ import { removeTokenFromStorage } from "../helper/util";
 //Store imports
 import shopStore from "../stores/ShopStore";
 import userStore from "../stores/userStore";
+
+//Style import
+import "../../stylesheets/navbar.css";
 
 @observer
 class NavBar extends Component {
@@ -30,8 +36,10 @@ class NavBar extends Component {
     const { amountInCart } = shopStore;
     const { key } = this.state;
     return (
-      <Navbar bg='dark' variant='dark' expand='lg'>
-        <Navbar.Brand>My Own Store</Navbar.Brand>
+      <Navbar className='navbar-all' variant='dark' expand='lg' fixed='top'>
+        <Navbar.Brand>
+          <Figure.Image className='logo' src={config.BASE_URL + "images/bioKumaButterfly2.png"} />
+        </Navbar.Brand>
         <Navbar.Toggle aria-controls='basic-navbar-nav' />
         <Navbar.Collapse id='basic-navbar-nav'>
           <Nav
@@ -69,7 +77,7 @@ class NavBar extends Component {
           >
             <Nav.Link as={Link} to='/cart' active={key === "Cart"} eventKey='Cart'>
               <div>
-                Items in Cart: {amountInCart}
+                Im Warenkorb: {amountInCart}
                 <Icon.Cart />
               </div>
             </Nav.Link>
