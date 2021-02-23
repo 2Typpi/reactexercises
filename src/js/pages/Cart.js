@@ -77,6 +77,7 @@ class Cart extends React.Component {
         </p>
       );
     }
+    console.log(userStore.userFromServer);
 
     return (
       <div>

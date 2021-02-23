@@ -120,9 +120,8 @@ class UserStore {
           this.loading = false;
           if (response.status >= 200 && response.status < 300) {
             response.json().then((json) => {
-              setTokenLocalStorage(json.token);
-              setUserToLocalStorage(json);
-              this.user = json;
+              history.replace("#/login");
+              history.go();
             });
           } else {
             this.registerRequestError = true;
