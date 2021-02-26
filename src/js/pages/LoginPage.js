@@ -3,8 +3,6 @@ import { Form, Button, Alert } from "react-bootstrap";
 import { observer } from "mobx-react";
 import { action, observable } from "mobx";
 
-import history from "../helper/browserHistory";
-
 //Store Imports
 import userStore from "../stores/userStore";
 
@@ -108,11 +106,11 @@ class LoginPage extends React.Component {
                   <span className='sr-only'>Loading...</span>
                 </Button>
               ) : (
-                <Button variant='dark' className='login-button' onClick={this.login.bind(this)}>
+                <Button className='login-button' onClick={this.login.bind(this)}>
                   Login
                 </Button>
               )}
-              <Button variant='dark' className='register-button' href='#/register'>
+              <Button className='register-button' href='#/register'>
                 Registieren
               </Button>
             </div>

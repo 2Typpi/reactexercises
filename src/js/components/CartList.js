@@ -19,43 +19,42 @@ import "../../stylesheets/cartList.css";
 class CartList extends Component {
   constructor(props) {
     super(props);
-    switch (props.article.article.priceValue) {
+    switch (props.itemAndAmount.article.priceValue) {
       case PriceValues.PIECE:
-        props.article.article.priceValue = "Stückpreis";
+        props.itemAndAmount.article.priceValue = "Stückpreis";
         break;
       case PriceValues.WEIGH:
-        props.article.article.priceValue = "Kilopreis";
+        props.itemAndAmount.article.priceValue = "Kilopreis";
         break;
     }
   }
 
   deleteFromCart(e) {
-    shopStore.removeFromCart(this.props.article);
+    shopStore.removeFromCart(this.props.itemAndAmount);
   }
 
   updateInput(e) {
     let number = Number.parseFloat(e.target.value);
-    shopStore.updateAmountInCart(this.props.article.article, number);
+    shopStore.updateAmountInCart(this.props.itemAndAmount.article, number);
   }
 
+  // Create a component to display the amount wether for order page or the cart
   createCountComponent() {
     let component;
+    let item = this.props.itemAndAmount.article;
+    let amount = this.props.itemAndAmount.count;
 
-    if (this.props.article.article.priceValue === "Kilopreis") {
+    if (item.priceValue === "Kilopreis") {
       if (this.props.isOrder) {
         component = (
           <div>
-            <b>{this.props.article.count + "g"}</b>
+            <b>{amount + "g"}</b>
           </div>
         );
       } else {
         component = (
           <InputGroup className='input-group-cart'>
-            <FormControl
-              type='number'
-              value={this.props.article.count}
-              onChange={this.updateInput.bind(this)}
-            />
+            <FormControl type='number' value={amount} onChange={this.updateInput.bind(this)} />
             <InputGroup.Append>
               <InputGroup.Text variant='success'> g </InputGroup.Text>
             </InputGroup.Append>
@@ -66,17 +65,13 @@ class CartList extends Component {
       if (this.props.isOrder) {
         component = (
           <div>
-            <b>{this.props.article.count + "Stück"}</b>
+            <b>{amount + " Stück"}</b>
           </div>
         );
       } else {
         component = (
           <InputGroup className='input-group-cart'>
-            <FormControl
-              type='number'
-              value={this.props.article.count}
-              onChange={this.updateInput.bind(this)}
-            />
+            <FormControl type='number' value={amount} onChange={this.updateInput.bind(this)} />
             <InputGroup.Append>
               <InputGroup.Text variant='success'> Stück </InputGroup.Text>
             </InputGroup.Append>
@@ -88,6 +83,8 @@ class CartList extends Component {
   }
 
   render() {
+    let item = this.props.itemAndAmount.article;
+
     const countComponent = this.createCountComponent();
 
     return (
@@ -96,17 +93,15 @@ class CartList extends Component {
           <Figure.Image
             className='cartImage'
             alt=''
-            src={config.BASE_URL + "images/" + this.props.article.article.imgSrc + ".jpg"}
+            src={config.BASE_URL + "images/" + item.imgSrc + ".jpg"}
           />
           <Media.Body className='mediaBody'>
-            <h4>{this.props.article.article.name}</h4>
+            <h4>{item.name}</h4>
             <Row>
-              <Col xs={5} xl={6}>
-                <strong>
-                  {this.props.article.article.price + "€ " + this.props.article.article.priceValue}
-                </strong>
+              <Col xs={6} xl={6}>
+                <strong>{item.price + "€ " + item.priceValue}</strong>
               </Col>
-              <Col xs={7} xl={6}>
+              <Col xs={6} xl={6}>
                 {countComponent}
               </Col>
             </Row>

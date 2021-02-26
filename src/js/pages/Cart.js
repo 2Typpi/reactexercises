@@ -7,6 +7,9 @@ import * as Icon from "react-bootstrap-icons";
 import shopStore from "../stores/ShopStore";
 import userStore from "../stores/userStore";
 
+// Helpers
+import { calcTotalPrice, getCartFromLocalStorage } from "../helper/util";
+
 //Selfmade Components
 import CartList from "../components/CartList";
 
@@ -46,23 +49,26 @@ class Cart extends React.Component {
     shopStore.toggleBoughtToast(false);
   }
 
-  render() {
+  localStoreCheck() {
     this.cartList = shopStore.itemsInCart;
+    let localStoreCart = getCartFromLocalStorage().cart;
+    if (this.cartList.length < localStoreCart.length) {
+      console.log("use Session");
+      shopStore.refreshAmountInCart(localStoreCart.length);
+      shopStore.refreshCart(localStoreCart);
+      this.cartList = shopStore.itemsInCart;
+    }
+  }
+
+  render() {
+    this.localStoreCheck();
 
     let totalPrice = 0.0;
-
-    // Detect how to Calculate Price
-    this.cartList.forEach((item) => {
-      item.article.priceValue === "Kilopreis"
-        ? (totalPrice += (item.article.price / 1000) * item.count)
-        : (totalPrice += item.article.price * item.count);
-    });
-
-    // Round Price to 2 Digits
-    let roundedtotalPriceString = totalPrice.toFixed(2);
-
+    if (this.cartList.length > 0) {
+      totalPrice = calcTotalPrice(this.cartList);
+    }
     // Split in Half for better displaying
-    let cart = this.cartList.map((article) => <CartList article={article} isOrder={false} />);
+    let cart = this.cartList.map((article) => <CartList itemAndAmount={article} isOrder={false} />);
     let leftSide;
     let rightSide;
     if (cart.length > 0) {
@@ -77,7 +83,6 @@ class Cart extends React.Component {
         </p>
       );
     }
-    console.log(userStore.userFromServer);
 
     return (
       <div>
@@ -97,13 +102,13 @@ class Cart extends React.Component {
         </Container>
         <hr />
         <div className='priceContainer'>
-          <b>Gesamtpreis: {roundedtotalPriceString} €</b>
+          <b>Gesamtpreis: {totalPrice} €</b>
           {userStore.userFromServer !== null ? (
-            <Button className='buyNow' variant='dark' onClick={this.buyNow.bind(this)}>
+            <Button className='buyNow' onClick={this.buyNow.bind(this)}>
               Jetzt Kaufen
             </Button>
           ) : (
-            <Button className='buyNow' href='#/login' variant='dark'>
+            <Button className='buyNow' href='#login'>
               Jetzt Kaufen
             </Button>
           )}

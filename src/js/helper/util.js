@@ -74,3 +74,38 @@ export function getUserFromLocalStorage() {
 
   return null;
 }
+
+export function setCartToLocalStorage(cart) {
+  if (typeof window !== "undefined") {
+    let object = {
+      "cart": cart,
+      timestamp: new Date().getTime(),
+    };
+    localStorage.setItem(config.CART_STORAGE_KEY, JSON.stringify(object));
+  }
+}
+
+export function getCartFromLocalStorage() {
+  if (typeof window !== "undefined") {
+    let object = JSON.parse(localStorage.getItem(config.CART_STORAGE_KEY));
+    if (object !== undefined) {
+      return object;
+    } else {
+      return null;
+    }
+  }
+}
+
+export function calcTotalPrice(list) {
+  let totalPrice = 0.0;
+
+  // Detect how to Calculate Price
+  list.forEach((item) => {
+    item.article.priceValue === "Kilopreis"
+      ? (totalPrice += (item.article.price / 1000) * item.count)
+      : (totalPrice += item.article.price * item.count);
+  });
+
+  // Round Price to 2 Digits
+  return totalPrice.toFixed(2);
+}

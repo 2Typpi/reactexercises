@@ -8,7 +8,7 @@ import { observer } from "mobx-react";
 import config from "../../config/main.config";
 
 //Helper imports
-import { removeTokenFromStorage } from "../helper/util";
+import { removeTokenFromStorage, getCartFromLocalStorage } from "../helper/util";
 
 //Store imports
 import shopStore from "../stores/ShopStore";
@@ -22,10 +22,22 @@ class NavBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      key: "Home",
+      key: window.location.hash.substring(2),
     };
   }
 
+  componentDidMount() {
+    let sessionCart = getCartFromLocalStorage();
+    console.log(sessionCart);
+    console.log(sessionCart.cart.length);
+    console.log(shopStore.amountInCart);
+    if (shopStore.amountInCart === 0 && sessionCart.cart.length > 0) {
+      shopStore.refreshAmountInCart(sessionCart.cart.length);
+      console.log(shopStore.amountInCart);
+    }
+  }
+
+  // setState is needed to reload the component
   handleItemClick(e) {
     this.setState({
       key: e,
@@ -34,7 +46,9 @@ class NavBar extends Component {
 
   render() {
     const { amountInCart } = shopStore;
+    //has to be mentioned for reload of component
     const { key } = this.state;
+    let activeKey = window.location.hash.substring(2);
     return (
       <Navbar className='navbar-all' variant='dark' expand='lg' fixed='top'>
         <Navbar.Brand>
@@ -48,10 +62,10 @@ class NavBar extends Component {
             activeKey='Home'
             onSelect={this.handleItemClick.bind(this)}
           >
-            <Nav.Link as={Link} to='/home' active={key === "Home"} eventKey='Home'>
+            <Nav.Link as={Link} to='/home' active={activeKey === "home"} eventKey='home'>
               Home
             </Nav.Link>
-            <Nav.Link as={Link} to='/shop' active={key === "Shop"} eventKey='Shop'>
+            <Nav.Link as={Link} to='/shop' active={activeKey === "shop"} eventKey='shop'>
               Shop
             </Nav.Link>
           </Nav>
@@ -62,7 +76,7 @@ class NavBar extends Component {
               <Nav.Link
                 as={Link}
                 to='/order'
-                active={key === "Order"}
+                active={key === "order"}
                 eventKey='Order'
                 onSelect={this.handleItemClick.bind(this)}
               >
@@ -75,7 +89,7 @@ class NavBar extends Component {
             className='justify-content-end'
             onSelect={this.handleItemClick.bind(this)}
           >
-            <Nav.Link as={Link} to='/cart' active={key === "Cart"} eventKey='Cart'>
+            <Nav.Link as={Link} to='/cart' active={activeKey === "cart"} eventKey='Cart'>
               <div>
                 Im Warenkorb: {amountInCart}
                 <Icon.Cart />
@@ -88,7 +102,7 @@ class NavBar extends Component {
               className='justify-content-end'
               onSelect={this.handleItemClick.bind(this)}
             >
-              <Nav.Link as={Link} to='/login' active={key === "Login"} eventKey='Login'>
+              <Nav.Link as={Link} to='/login' active={activeKey === "login"} eventKey='Login'>
                 Login
               </Nav.Link>
             </Nav>

@@ -1,3 +1,7 @@
+.card-box {
+  width: 18rem !important;
+}
+
 .card-img {
   display: block;
   margin: 0 auto 10px;
@@ -19,6 +23,11 @@
 }
 
 .cart-button:hover {
+  background-color: green;
+  border-color: green;
+}
+
+.cart-button:focus {
   background-color: green;
   border-color: green;
 }

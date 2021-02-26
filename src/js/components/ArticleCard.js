@@ -19,12 +19,12 @@ import "../../stylesheets/card.css";
 class ArticleCard extends Component {
   constructor(props) {
     super(props);
-    switch (props.articleCardList.priceValue) {
+    switch (props.article.priceValue) {
       case PriceValues.PIECE:
-        props.articleCardList.priceValue = "Stückpreis";
+        props.article.priceValue = "Stückpreis";
         break;
       case PriceValues.WEIGH:
-        props.articleCardList.priceValue = "Kilopreis";
+        props.article.priceValue = "Kilopreis";
         break;
     }
     this.state = { articleAmount: 0, showToast: false };
@@ -38,7 +38,7 @@ class ArticleCard extends Component {
   putIntoCart(e) {
     let amount = this.state.articleAmount;
     if (amount > 0) {
-      shopStore.addToShoppingCart(amount, this.props.articleCardList);
+      shopStore.addToShoppingCart(amount, this.props.article);
     } else {
       shopStore.toggleCartToast(true);
     }
@@ -46,16 +46,15 @@ class ArticleCard extends Component {
 
   render() {
     // Prepare price
-    let priceDisplay = this.props.articleCardList.price.toFixed(2);
+    let priceDisplay = this.props.article.price.toFixed(2);
+    let item = this.props.article;
     return (
       <div>
-        <Card text={"dark"} style={{ width: "18rem" }}>
+        <Card className='card-box'>
           <Card.Body>
-            <Card.Title>{this.props.articleCardList.name}</Card.Title>
-            <Card.Img
-              src={config.BASE_URL + "images/" + this.props.articleCardList.imgSrc + ".jpg"}
-            />
-            {this.props.articleCardList.priceValue === "Kilopreis" ? (
+            <Card.Title>{item.name}</Card.Title>
+            <Card.Img src={config.BASE_URL + "images/" + item.imgSrc + ".jpg"} />
+            {item.priceValue === "Kilopreis" ? (
               <InputGroup>
                 <FormControl
                   className='amountInputWeigh'
@@ -81,9 +80,9 @@ class ArticleCard extends Component {
               </InputGroup>
             )}
             <div className='price-box'>
-              <b>{priceDisplay + "€ " + this.props.articleCardList.priceValue}</b>
+              <b>{priceDisplay + "€ " + item.priceValue}</b>
 
-              <Button className='cart-button' variant='dark' onClick={this.putIntoCart.bind(this)}>
+              <Button className='cart-button' onClick={this.putIntoCart.bind(this)}>
                 <Icon.Cart />
               </Button>
             </div>

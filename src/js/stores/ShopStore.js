@@ -4,42 +4,34 @@ import { observable, action } from "mobx";
 import config from "../../config/main.config";
 
 //Helper imports
-import { getTokenFromLocalStorage } from "../helper/util";
+import { getTokenFromLocalStorage, setCartToLocalStorage } from "../helper/util";
 
 class ShopStore {
   @observable amountInCart = 0;
   @observable itemsInCart = [];
   @observable articleList = [];
 
-  // Toast States
-  @observable errorToast = false;
-  @observable putInCartToast = false;
-  @observable boughtToast = false;
-
-  @action toggleBoughtToast(bool) {
-    this.boughtToast = bool;
+  @action refreshAmountInCart(amount) {
+    this.amountInCart = amount;
   }
 
-  @action toggleCartToast(bool) {
-    this.errorToast = bool;
-  }
-
-  @action togglePutInCartToast(bool) {
-    this.putInCartToast = bool;
+  @action refreshCart(cart) {
+    cart.forEach((item) => this.itemsInCart.push(item));
   }
 
   @action emptyCart() {
     this.amountInCart = 0;
     this.itemsInCart = [];
+    setCartToLocalStorage(this.itemsInCart);
   }
 
   @action updateAmountInCart(article, count) {
     let isItemInCart = this.itemsInCart.find((element) => element.article.id === article.id);
-
     if (isItemInCart !== undefined) {
       let indexInCart = this.itemsInCart.indexOf(isItemInCart);
       this.itemsInCart[indexInCart].count = count;
     }
+    setCartToLocalStorage(this.itemsInCart);
   }
 
   /**
@@ -61,6 +53,7 @@ class ShopStore {
       let indexInCart = this.itemsInCart.indexOf(isItemInCart);
       this.itemsInCart[indexInCart].count += count;
     }
+    setCartToLocalStorage(this.itemsInCart);
   }
 
   /**
@@ -70,10 +63,12 @@ class ShopStore {
    */
   @action removeFromCart(article) {
     let indexOfDelete = this.itemsInCart.indexOf(article);
+    console.log(indexOfDelete);
     if (indexOfDelete >= 0) {
       this.itemsInCart.splice(indexOfDelete, 1);
       this.amountInCart--;
     }
+    setCartToLocalStorage(this.itemsInCart);
   }
 
   /**
@@ -133,6 +128,23 @@ class ShopStore {
         console.log("Error on fetching3");
         throw error;
       });
+  }
+
+  // Toast States
+  @observable errorToast = false;
+  @observable putInCartToast = false;
+  @observable boughtToast = false;
+
+  @action toggleBoughtToast(bool) {
+    this.boughtToast = bool;
+  }
+
+  @action toggleCartToast(bool) {
+    this.errorToast = bool;
+  }
+
+  @action togglePutInCartToast(bool) {
+    this.putInCartToast = bool;
   }
 }
 

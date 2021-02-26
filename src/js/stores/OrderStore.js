@@ -13,7 +13,7 @@ class OrderStore {
   @observable orders = [];
 
   /**
-   * Fetch all Articles form the Backend
+   * Fetch all Orders for one User from the Backend
    */
   @action fetchOrders() {
     return fetch(config.BASE_URL + "order", {

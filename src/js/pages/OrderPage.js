@@ -7,6 +7,9 @@ import { Row, Col, Card, Spinner, Button, Accordion } from "react-bootstrap";
 import orderStore from "../stores/OrderStore";
 import shopStore from "../stores/ShopStore";
 
+// Helpers
+import { calcTotalPrice } from "../helper/util";
+
 //Selfmade Components
 import CartList from "../components/CartList";
 
@@ -29,7 +32,6 @@ class OrderPage extends React.Component {
   }
 
   render() {
-    //TODO: get all articles with the needed ids and build same as in Cart
     let orderlist = orderStore.orders;
     let articleList = shopStore.articleList;
 
@@ -43,20 +45,10 @@ class OrderPage extends React.Component {
       for (const orderArticle of orderArticleList) {
         if (orderArticle.datetime !== undefined) {
           let orderItemList = orderList.map((article) => (
-            <CartList article={article} isOrder={true} />
+            <CartList itemAndAmount={article} isOrder={true} />
           ));
 
-          let totalPrice = 0.0;
-
-          // Detect how to Calculate Price
-          orderList.forEach((item) => {
-            item.article.priceValue === "Kilopreis"
-              ? (totalPrice += (item.article.price / 1000) * item.count)
-              : (totalPrice += item.article.price * item.count);
-          });
-
-          // Round Price to 2 Digits
-          let roundedtotalPriceString = totalPrice.toFixed(2);
+          let totalPrice = calcTotalPrice(orderList);
 
           // Split in Half for better displaying
           let leftSide;
@@ -75,11 +67,15 @@ class OrderPage extends React.Component {
                 <Accordion.Collapse eventKey='0'>
                   <Card.Body>
                     <Row>
-                      <Col xs={6}>{leftSide}</Col>
-                      <Col xs={6}>{rightSide}</Col>
+                      <Col sm={12} md={12} lg={6} xl={6}>
+                        {leftSide}
+                      </Col>
+                      <Col sm={12} md={12} lg={6} xl={6}>
+                        {rightSide}
+                      </Col>
                     </Row>{" "}
                     <hr />
-                    <b>Gesamtpreis: {roundedtotalPriceString} €</b>
+                    <b>Gesamtpreis: {totalPrice} €</b>
                   </Card.Body>
                 </Accordion.Collapse>
               </Card>

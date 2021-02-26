@@ -102,18 +102,16 @@ class Shop extends React.Component {
     }
 
     // Map the single categories
-    const vegetableCards = this.vegetable.map((vegetable) => (
-      <ArticleCard articleCardList={vegetable} />
-    ));
-    const fruitCards = this.fruit.map((fruit) => <ArticleCard articleCardList={fruit} />);
+    const vegetableCards = this.vegetable.map((vegetable) => <ArticleCard article={vegetable} />);
+    const fruitCards = this.fruit.map((fruit) => <ArticleCard article={fruit} />);
     const dairyproductCards = this.dairyproduct.map((dairyproduct) => (
-      <ArticleCard articleCardList={dairyproduct} />
+      <ArticleCard article={dairyproduct} />
     ));
-    const meatCards = this.meat.map((meat) => <ArticleCard articleCardList={meat} />);
-    const drinkCards = this.drink.map((drink) => <ArticleCard articleCardList={drink} />);
-    const sweetsCards = this.sweets.map((sweets) => <ArticleCard articleCardList={sweets} />);
-    const bakeryCards = this.bakery.map((bakery) => <ArticleCard articleCardList={bakery} />);
-    const miscCards = this.misc.map((misc) => <ArticleCard articleCardList={misc} />);
+    const meatCards = this.meat.map((meat) => <ArticleCard article={meat} />);
+    const drinkCards = this.drink.map((drink) => <ArticleCard article={drink} />);
+    const sweetsCards = this.sweets.map((sweets) => <ArticleCard article={sweets} />);
+    const bakeryCards = this.bakery.map((bakery) => <ArticleCard article={bakery} />);
+    const miscCards = this.misc.map((misc) => <ArticleCard article={misc} />);
 
     return (
       <div>
