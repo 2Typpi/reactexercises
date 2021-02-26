@@ -1,0 +1,25 @@
+version: "3.3"
+services:
+  nodeserver:
+    build: ./bioKumaBackend/
+    ports:
+      - "3000:3000"
+    depends_on:
+      - "mysqldb"
+  frontend:
+    build: ./reactexercises/
+    ports:
+      - "8080:8080"
+  mysqldb:
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: "admin"
+      MYSQL_USER: "admin"
+      MYSQL_PASS: "admin"
+      MYSQL_DATABASE: "biokuma"
+    volumes:
+      - my-datavolume:/var/lib/mysql
+volumes:
+  my-datavolume:
