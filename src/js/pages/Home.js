@@ -7,6 +7,7 @@ import config from "../../config/main.config";
 
 //Style
 import "../../stylesheets/home.css";
+import "../../stylesheets/socialButtons.css";
 
 class Home extends React.Component {
   render() {

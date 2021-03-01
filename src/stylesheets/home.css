@@ -14,29 +14,3 @@
   font-weight: bold;
   text-align: center;
 }
-
-.socialMediaButton {
-  position: relative;
-  height: 70px;
-  width: 70px;
-  border-radius: 100%;
-  margin: 10px;
-}
-
-.socialMediaIcon {
-  height: 40px;
-  width: 40px;
-  position: absolute;
-  top: 20%;
-  right: 20%;
-}
-
-#twitterButton {
-  background-color: #1da1f2;
-  border: 0;
-}
-
-#facebookButton {
-  background-color: #3b5998;
-  border: 0;
-}
