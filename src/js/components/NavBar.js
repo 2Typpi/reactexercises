@@ -73,7 +73,7 @@ class NavBar extends Component {
                 as={Link}
                 to='/order'
                 active={key === "order"}
-                eventKey='Order'
+                eventKey='order'
                 onSelect={this.handleItemClick.bind(this)}
               >
                 Bestellungen
@@ -85,7 +85,7 @@ class NavBar extends Component {
             className='justify-content-end'
             onSelect={this.handleItemClick.bind(this)}
           >
-            <Nav.Link as={Link} to='/cart' active={activeKey === "cart"} eventKey='Cart'>
+            <Nav.Link as={Link} to='/cart' active={activeKey === "cart"} eventKey='cart'>
               <div>
                 Im Warenkorb: {amountInCart}
                 <Icon.Cart />
@@ -98,7 +98,7 @@ class NavBar extends Component {
               className='justify-content-end'
               onSelect={this.handleItemClick.bind(this)}
             >
-              <Nav.Link as={Link} to='/login' active={activeKey === "login"} eventKey='Login'>
+              <Nav.Link as={Link} to='/login' active={activeKey === "login"} eventKey='login'>
                 Login
               </Nav.Link>
             </Nav>
@@ -112,7 +112,7 @@ class NavBar extends Component {
                 this.setState({});
               }}
             >
-              <Nav.Link as={Link} to='/login' active={false} eventKey='Login'>
+              <Nav.Link as={Link} to='/login' active={false} eventKey='login'>
                 Logout
               </Nav.Link>
             </Nav>
