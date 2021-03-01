@@ -31,6 +31,37 @@ class OrderPage extends React.Component {
     }
   }
 
+  findOrderWithTimestamp(timestamp) {
+    let orderWithTimestamp;
+    orderLoop: for (orderWithTimestamp of orderStore.orders) {
+      for (const order of orderWithTimestamp) {
+        if (order.datetime === timestamp) {
+          break orderLoop;
+        }
+      }
+    }
+    return orderWithTimestamp;
+  }
+
+  prepareDataForCart(orderWithTimestamp) {
+    let cart = [];
+    orderWithTimestamp.forEach((order) => {
+      if (order.datetime === undefined) {
+        let article = shopStore.articleList.find((element) => element.id === order.productId);
+        let count = order.productQuantity;
+        cart.push({ count, article });
+      }
+    });
+    return cart;
+  }
+
+  reBuy(datetime) {
+    let orderWithTimestamp = this.findOrderWithTimestamp(datetime);
+    let newCart = this.prepareDataForCart(orderWithTimestamp);
+    shopStore.refreshCart(newCart);
+    shopStore.refreshAmountInCart(newCart.length);
+  }
+
   render() {
     let orderlist = orderStore.orders;
     let articleList = shopStore.articleList;
@@ -76,6 +107,9 @@ class OrderPage extends React.Component {
                     </Row>{" "}
                     <hr />
                     <b>Gesamtpreis: {totalPrice} €</b>
+                    <Button onClick={this.reBuy.bind(this, orderArticle.datetime)}>
+                      Nochmal Kaufen
+                    </Button>
                   </Card.Body>
                 </Accordion.Collapse>
               </Card>

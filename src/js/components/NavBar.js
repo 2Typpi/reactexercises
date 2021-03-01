@@ -28,12 +28,8 @@ class NavBar extends Component {
 
   componentDidMount() {
     let sessionCart = getCartFromLocalStorage();
-    console.log(sessionCart);
-    console.log(sessionCart.cart.length);
-    console.log(shopStore.amountInCart);
     if (shopStore.amountInCart === 0 && sessionCart.cart.length > 0) {
       shopStore.refreshAmountInCart(sessionCart.cart.length);
-      console.log(shopStore.amountInCart);
     }
   }
 

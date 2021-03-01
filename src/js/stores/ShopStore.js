@@ -11,20 +11,41 @@ class ShopStore {
   @observable itemsInCart = [];
   @observable articleList = [];
 
+  /**
+   * After Refresh update the amount in cart
+   *
+   * @param {number} amount
+   */
   @action refreshAmountInCart(amount) {
     this.amountInCart = amount;
   }
 
+  /**
+   * Changes the Cart to param
+   *
+   * @param {Array} cart
+   */
   @action refreshCart(cart) {
+    this.itemsInCart = [];
     cart.forEach((item) => this.itemsInCart.push(item));
+    setCartToLocalStorage(this.itemsInCart);
   }
 
+  /**
+   * Clears the cart
+   */
   @action emptyCart() {
     this.amountInCart = 0;
     this.itemsInCart = [];
     setCartToLocalStorage(this.itemsInCart);
   }
 
+  /**
+   * Updates the amount of the articel in the cart
+   *
+   * @param {object} article
+   * @param {number} count
+   */
   @action updateAmountInCart(article, count) {
     let isItemInCart = this.itemsInCart.find((element) => element.article.id === article.id);
     if (isItemInCart !== undefined) {
@@ -37,8 +58,8 @@ class ShopStore {
   /**
    * Adds Articles to the Cart
    *
-   * @param {*} count
-   * @param {*} article
+   * @param {number} count
+   * @param {object} article
    */
   @action addToShoppingCart(count, article) {
     let isItemInCart = this.itemsInCart.find((element) => element.article.id === article.id);
@@ -59,7 +80,7 @@ class ShopStore {
   /**
    * Removes Articles from the Cart
    *
-   * @param {*} article
+   * @param {object} article
    */
   @action removeFromCart(article) {
     let indexOfDelete = this.itemsInCart.indexOf(article);
@@ -99,7 +120,7 @@ class ShopStore {
   /**
    * Send the Cart to the Backend (Buy)
    *
-   * @param {*} transferData
+   * @param {array} transferData
    */
   @action buyArticles(transferData) {
     // Set header and body for POST request

@@ -53,7 +53,6 @@ class Cart extends React.Component {
     this.cartList = shopStore.itemsInCart;
     let localStoreCart = getCartFromLocalStorage().cart;
     if (this.cartList.length < localStoreCart.length) {
-      console.log("use Session");
       shopStore.refreshAmountInCart(localStoreCart.length);
       shopStore.refreshCart(localStoreCart);
       this.cartList = shopStore.itemsInCart;
