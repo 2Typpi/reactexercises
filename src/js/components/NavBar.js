@@ -28,7 +28,7 @@ class NavBar extends Component {
 
   componentDidMount() {
     let sessionCart = getCartFromLocalStorage();
-    if (shopStore.amountInCart === 0 && sessionCart.cart.length > 0) {
+    if (sessionCart !== null && shopStore.amountInCart === 0 && sessionCart.cart.length > 0) {
       shopStore.refreshAmountInCart(sessionCart.cart.length);
     }
   }

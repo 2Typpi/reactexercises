@@ -39,7 +39,7 @@ class Footer extends React.Component {
         <div class='footer-left'>
           <p class='footer-links'>
             <a href='#/home'>Home</a> · <a href='#/shop'>Shop</a> · <a href='#/about'>Über uns</a> ·{" "}
-            <a href='#'>Kontakt</a> · <a href='#'>FAQ</a> · <a href='#'>Datemschutz</a> ·{" "}
+            <a href='#'>Kontakt</a> · <a href='#'>FAQ</a> · <a href='#'>Datenschutz</a> ·{" "}
             <a href='#'>Impressum</a>
           </p>
 
