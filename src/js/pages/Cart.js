@@ -49,6 +49,9 @@ class Cart extends React.Component {
     shopStore.toggleBoughtToast(false);
   }
 
+  /**
+   * Check if there exists a Cart in the LocalStorage
+   */
   localStoreCheck() {
     this.cartList = shopStore.itemsInCart;
     let localStoreCart = getCartFromLocalStorage() ? getCartFromLocalStorage().cart : [];

@@ -6,6 +6,7 @@ import { Row, Col, Card, Spinner, Button, Accordion } from "react-bootstrap";
 //Stores
 import orderStore from "../stores/OrderStore";
 import shopStore from "../stores/ShopStore";
+import userStore from "../stores/userStore";
 
 // Helpers
 import { calcTotalPrice } from "../helper/util";
@@ -23,7 +24,12 @@ class OrderPage extends React.Component {
   }
 
   componentDidMount() {
-    if (orderStore.orders.length <= 0 || orderStore.orders === undefined) {
+    if (
+      userStore.userFromServer !== null &&
+      (userStore.userFromServer.role === "supervisor" || userStore.userFromServer.role === "admin")
+    ) {
+      orderStore.fetchAllOrders();
+    } else {
       orderStore.fetchOrders();
     }
     if (shopStore.articleList.length <= 0 || shopStore.articleList === undefined) {
@@ -107,9 +113,15 @@ class OrderPage extends React.Component {
                     </Row>{" "}
                     <hr />
                     <b>Gesamtpreis: {totalPrice} €</b>
-                    <Button onClick={this.reBuy.bind(this, orderArticle.datetime)}>
-                      Nochmal Kaufen
-                    </Button>
+                    {userStore.userFromServer !== null &&
+                    (userStore.userFromServer.role === "supervisor" ||
+                      userStore.userFromServer.role === "admin") ? (
+                      <div></div>
+                    ) : (
+                      <Button onClick={this.reBuy.bind(this, orderArticle.datetime)}>
+                        Nochmal Kaufen
+                      </Button>
+                    )}
                   </Card.Body>
                 </Accordion.Collapse>
               </Card>

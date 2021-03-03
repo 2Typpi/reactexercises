@@ -49,6 +49,7 @@ export default class Layout extends React.Component {
               <Route exact path='/order' component={Order} />
               <Route exact path='/login' component={Login} />
               <Route exact path='/register' component={Register} />
+              <Route exact path='/order/all' component={Order} />
             </div>
           </div>
         </HashRouter>

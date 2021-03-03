@@ -38,6 +38,33 @@ class OrderStore {
         throw error;
       });
   }
+
+  /**
+   * Fetch all Orders from the Backend
+   */
+  @action fetchAllOrders() {
+    return fetch(config.BASE_URL + "order/all", {
+      method: "POST",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Authorization": "Bearer " + getTokenFromLocalStorage(),
+      },
+      body: JSON.stringify(userStore.userFromServer),
+    })
+      .then((res) => {
+        if (res.status >= 200 && res.status < 300) {
+          res.json().then((response) => (this.orders = response));
+        } else {
+          console.log("error on fetching1");
+        }
+      })
+      .catch((error) => {
+        console.log("Error on fetching2");
+        throw error;
+      });
+  }
 }
 
 const store = new OrderStore();

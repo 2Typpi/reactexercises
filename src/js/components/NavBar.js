@@ -65,9 +65,24 @@ class NavBar extends Component {
               Shop
             </Nav.Link>
           </Nav>
-          {userStore.userFromServer === null ? (
-            <div></div>
+          {userStore.userFromServer !== null &&
+          (userStore.userFromServer.role === "supervisor" ||
+            userStore.userFromServer.role === "admin") ? (
+            <Nav variant='pills' className='justify-content-end'>
+              <Nav.Link
+                as={Link}
+                to='/order/all'
+                active={key === "orderall"}
+                eventKey='orderall'
+                onSelect={this.handleItemClick.bind(this)}
+              >
+                Alle Bestellungen
+              </Nav.Link>
+            </Nav>
           ) : (
+            <div></div>
+          )}
+          {userStore.userFromServer !== null && userStore.userFromServer.role === "basic" ? (
             <Nav variant='pills' className='justify-content-end'>
               <Nav.Link
                 as={Link}
@@ -79,6 +94,8 @@ class NavBar extends Component {
                 Bestellungen
               </Nav.Link>
             </Nav>
+          ) : (
+            <div></div>
           )}
           <Nav
             variant='pills'
