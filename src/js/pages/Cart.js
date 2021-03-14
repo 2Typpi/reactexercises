@@ -2,6 +2,7 @@ import { observer } from "mobx-react";
 import React from "react";
 import { Button, Alert, Row, Col, Container } from "react-bootstrap";
 import * as Icon from "react-bootstrap-icons";
+import { NotificationContainer, NotificationManager } from "react-notifications";
 
 //Stores
 import shopStore from "../stores/ShopStore";
@@ -14,6 +15,7 @@ import { calcTotalPrice, getCartFromLocalStorage } from "../helper/util";
 import CartList from "../components/CartList";
 
 //Styling
+import "react-notifications/lib/notifications.css";
 import "../../stylesheets/cart.css";
 
 @observer
@@ -43,6 +45,7 @@ class Cart extends React.Component {
 
     // Reduces data to id and count for the transfer
     shopStore.buyArticles(this.createTransferData());
+    NotificationManager.success("Vielen Dank für ihren Einkauf!");
   }
 
   toggleToast(e) {
@@ -88,6 +91,7 @@ class Cart extends React.Component {
 
     return (
       <div>
+        <NotificationContainer />
         <h4>
           Ihr Warenkorb
           <Icon.Cart />
@@ -115,13 +119,6 @@ class Cart extends React.Component {
             </Button>
           )}
         </div>
-        {shopStore.boughtToast ? (
-          <Alert variant='success' dismissible={true} onClose={this.toggleToast.bind(this)}>
-            Vielen Dank für ihren Einkauf!
-          </Alert>
-        ) : (
-          <div></div>
-        )}
       </div>
     );
   }

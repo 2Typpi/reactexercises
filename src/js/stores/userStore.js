@@ -1,7 +1,6 @@
 import { action, computed, observable } from "mobx";
 import config from "../../config/main.config";
 import history from "../helper/browserHistory";
-import loginPage from "../pages/LoginPage";
 
 import {
   getTokenFromLocalStorage,

@@ -63,7 +63,6 @@ class ShopStore {
    */
   @action addToShoppingCart(count, article) {
     let isItemInCart = this.itemsInCart.find((element) => element.article.id === article.id);
-    this.togglePutInCartToast(true);
 
     if (isItemInCart === undefined) {
       // Article is not in Cart yet
@@ -152,20 +151,10 @@ class ShopStore {
   }
 
   // Toast States
-  @observable errorToast = false;
-  @observable putInCartToast = false;
   @observable boughtToast = false;
 
   @action toggleBoughtToast(bool) {
     this.boughtToast = bool;
-  }
-
-  @action toggleCartToast(bool) {
-    this.errorToast = bool;
-  }
-
-  @action togglePutInCartToast(bool) {
-    this.putInCartToast = bool;
   }
 }
 

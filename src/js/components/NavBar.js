@@ -64,6 +64,21 @@ class NavBar extends Component {
             <Nav.Link as={Link} to='/shop' active={activeKey === "shop"} eventKey='shop'>
               Shop
             </Nav.Link>
+            {userStore.userFromServer !== null &&
+            (userStore.userFromServer.role === "supervisor" ||
+              userStore.userFromServer.role === "admin") ? (
+              <Nav.Link
+                as={Link}
+                to='/creation'
+                active={key === "creation"}
+                eventKey='creation'
+                onSelect={this.handleItemClick.bind(this)}
+              >
+                Neues Prdoukt
+              </Nav.Link>
+            ) : (
+              <div></div>
+            )}
           </Nav>
           {userStore.userFromServer !== null &&
           (userStore.userFromServer.role === "supervisor" ||

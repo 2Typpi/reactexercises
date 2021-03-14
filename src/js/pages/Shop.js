@@ -73,14 +73,6 @@ class Shop extends React.Component {
     this.setState({ filteredList: filtered, filtered: true });
   }
 
-  toggleCartErrorToast(e) {
-    shopStore.toggleCartToast(false);
-  }
-
-  toggleAddToast(e) {
-    shopStore.togglePutInCartToast(false);
-  }
-
   render() {
     let list = shopStore.articleList;
 
@@ -115,20 +107,6 @@ class Shop extends React.Component {
 
     return (
       <div>
-        {shopStore.errorToast ? (
-          <Alert variant='danger' dismissible={true} onClose={this.toggleCartErrorToast.bind(this)}>
-            Bitte legen sie nicht weniger als 1 Artikel/Gramm in den Warenkorb!
-          </Alert>
-        ) : (
-          <div></div>
-        )}
-        {shopStore.putInCartToast ? (
-          <Alert variant='success' dismissible={true} onClose={this.toggleAddToast.bind(this)}>
-            Artikel wurde zum Warenkorb hinzugefügt!
-          </Alert>
-        ) : (
-          <div></div>
-        )}
         <form className='searchForm' action=''>
           <input
             className='searchBar'

@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { Card, Button, Toast, InputGroup, FormControl } from "react-bootstrap";
 import * as Icon from "react-bootstrap-icons";
 import { observer } from "mobx-react";
+import { NotificationContainer, NotificationManager } from "react-notifications";
 
 //config
 import config from "../../config/main.config";
@@ -13,6 +14,7 @@ import shopStore from "../stores/ShopStore";
 import { PriceValues } from "../helper/PriceValues";
 
 //Style Import
+import "react-notifications/lib/notifications.css";
 import "../../stylesheets/card.css";
 
 @observer
@@ -39,8 +41,11 @@ class ArticleCard extends Component {
     let amount = this.state.articleAmount;
     if (amount > 0) {
       shopStore.addToShoppingCart(amount, this.props.article);
+      NotificationManager.success("Artikel wurde zum Warenkorb hinzugefügt!");
     } else {
-      shopStore.toggleCartToast(true);
+      NotificationManager.error(
+        "Bitte legen sie nicht weniger als 1 Artikel/Gramm in den Warenkorb!"
+      );
     }
   }
 
@@ -50,6 +55,7 @@ class ArticleCard extends Component {
     let item = this.props.article;
     return (
       <div>
+        <NotificationContainer />
         <Card className='card-box'>
           <Card.Body>
             <Card.Title>{item.name}</Card.Title>

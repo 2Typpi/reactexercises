@@ -10,6 +10,7 @@ import Cart from "./Cart";
 import Login from "./LoginPage";
 import Register from "./RegisterPage";
 import Order from "./OrderPage";
+import Creation from "./CreationPage";
 import Footer from "../components/Footer";
 
 //css files
@@ -50,6 +51,7 @@ export default class Layout extends React.Component {
               <Route exact path='/login' component={Login} />
               <Route exact path='/register' component={Register} />
               <Route exact path='/order/all' component={Order} />
+              <Route exact path='/creation' component={Creation} />
             </div>
           </div>
         </HashRouter>
