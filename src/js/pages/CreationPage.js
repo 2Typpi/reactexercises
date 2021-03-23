@@ -22,6 +22,7 @@ class CreationPage extends React.Component {
       price: "",
       imgSrc: "",
     };
+    this.img = new FormData();
 
     bsCustomFileInput.init();
   }
@@ -42,7 +43,7 @@ class CreationPage extends React.Component {
       priceValue: 0,
       category: 0,
       // Convert to double
-      price: product.price,
+      price: 0.0,
       imgSrc: product.imgSrc,
     };
     switch (product.priceValue) {
@@ -74,7 +75,14 @@ class CreationPage extends React.Component {
         transportProduct.category = Categories.VEGETABLE;
     }
 
-    //TODO: Transform Price to double
+    if (parseFloat(product.price.replace(",", ".")) === NaN) {
+      return -1;
+    } else {
+      transportProduct.price = parseFloat(product.price.replace(",", "."));
+    }
+    transportProduct.imgSrc = product.imgSrc.split(".")[0];
+
+    return transportProduct;
   }
 
   create() {
@@ -87,8 +95,14 @@ class CreationPage extends React.Component {
       this.product.price !== "" ||
       this.product.imgSrc !== ""
     ) {
-      let transferProductStructure = createTransferStruct(this.product);
+      let transferProductStructure = this.createTransferStruct(this.product);
+      console.log(transferProductStructure);
     }
+  }
+
+  uploadImage(e) {
+    this.product.imgSrc = e.target.files[0].name;
+    this.img.append("productImage", e.target.files[0], e.target.files[0].name);
   }
 
   handleChange(prop, e) {
@@ -156,7 +170,7 @@ class CreationPage extends React.Component {
                 id='custom-file'
                 label={this.product.imgSrc}
                 custom
-                onChange={this.handleChange.bind(this, "imgSrc")}
+                onChange={this.uploadImage.bind(this)}
               />
             </Form.Group>
 

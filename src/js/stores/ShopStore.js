@@ -150,6 +150,10 @@ class ShopStore {
       });
   }
 
+  @action creatArticle(transferData) {
+    //TODO: Create in the Backend after succesfull start file Upload.
+  }
+
   // Toast States
   @observable boughtToast = false;
 

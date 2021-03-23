@@ -19,24 +19,6 @@ import "../../stylesheets/all.css";
 @observer
 export default class Layout extends React.Component {
   render() {
-    const description = "aklsjdflakdjfklajdkfaiodjlkfajkldjfkljflasdljlfjksladfjaksdjflasjkdflkj";
-    const columns = [
-      {
-        title: "About",
-        resources: [
-          {
-            name: "Datenschutz",
-          },
-          {
-            name: "Impressum",
-          },
-          {
-            name: "FAQ",
-          },
-        ],
-      },
-    ];
-
     return (
       <div>
         <HashRouter>
