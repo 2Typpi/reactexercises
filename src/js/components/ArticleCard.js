@@ -59,7 +59,7 @@ class ArticleCard extends Component {
         <Card className='card-box'>
           <Card.Body>
             <Card.Title>{item.name}</Card.Title>
-            <Card.Img src={config.BASE_URL + "images/" + item.imgSrc + ".jpg"} />
+            <Card.Img src={config.BASE_URL + "articleImages/" + item.imgSrc} />
             {item.priceValue === "Kilopreis" ? (
               <InputGroup>
                 <FormControl

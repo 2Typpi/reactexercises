@@ -150,8 +150,52 @@ class ShopStore {
       });
   }
 
-  @action creatArticle(transferData) {
-    //TODO: Create in the Backend after succesfull start file Upload.
+  @action creatArticle(transferData, img) {
+    const postRequestOptions = {
+      method: "POST",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Authorization": "Bearer " + getTokenFromLocalStorage(),
+      },
+      body: JSON.stringify(transferData),
+    };
+    fetch(config.BASE_URL + "articles/create", postRequestOptions)
+      .then((res) => {
+        if (res.status >= 200 && res.status < 300) {
+          this.uploadImage(img);
+        } else {
+          res.json().then((response) => alert(response));
+        }
+      })
+      .catch((error) => {
+        console.log("Error on fetching3");
+        throw error;
+      });
+  }
+
+  @action uploadImage(img) {
+    const postRequestOptions = {
+      method: "POST",
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Authorization": "Bearer " + getTokenFromLocalStorage(),
+      },
+      body: img,
+    };
+    fetch(config.BASE_URL + "articles/create/image", postRequestOptions)
+      .then((res) => {
+        if (res.status >= 200 && res.status < 300) {
+          res.json().then((response) => console.log(response));
+        } else {
+          res.json().then((response) => alert(response));
+        }
+      })
+      .catch((error) => {
+        console.log("Error on fetching3");
+        throw error;
+      });
   }
 
   // Toast States

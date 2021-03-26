@@ -22,7 +22,7 @@ class NavBar extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      key: window.location.hash.substring(2),
+      key: window.location.hash.substring(2) ? window.location.hash.substring(2) : "home",
     };
   }
 
@@ -44,7 +44,7 @@ class NavBar extends Component {
     const { amountInCart } = shopStore;
     //has to be mentioned for reload of component
     const { key } = this.state;
-    let activeKey = window.location.hash.substring(2);
+    let activeKey = window.location.hash.substring(2) ? window.location.hash.substring(2) : "home";
     return (
       <Navbar className='navbar-all' variant='dark' expand='lg' fixed='top'>
         <Navbar.Brand>

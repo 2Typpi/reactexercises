@@ -8,6 +8,9 @@ import bsCustomFileInput from "bs-custom-file-input";
 import { Categories } from "../helper/Categories";
 import { PriceValues } from "../helper/PriceValues";
 
+// Store Imports
+import shopStore from "../stores/ShopStore";
+
 //Style Imports
 import "../../stylesheets/register.css";
 
@@ -49,30 +52,40 @@ class CreationPage extends React.Component {
     switch (product.priceValue) {
       case "Kilopreis":
         transportProduct.priceValue = PriceValues.WEIGH;
+        break;
       case "Stückpreis":
         transportProduct.priceValue = PriceValues.PIECE;
+        break;
       default:
         transportProduct.priceValue = PriceValues.PIECE;
+        break;
     }
+    console.log(product.category);
     switch (product.category) {
       case "Gemüse":
         transportProduct.category = Categories.VEGETABLE;
+        break;
       case "Früchte":
         transportProduct.category = Categories.FRUITS;
+        break;
       case "Milchprodukte":
         transportProduct.category = Categories.DAIRYPRODUCTS;
+        break;
       case "Fleisch":
         transportProduct.category = Categories.MEAT;
+        break;
       case "Getränke":
         transportProduct.category = Categories.DRINKS;
+        break;
       case "Süßigkeiten":
         transportProduct.category = Categories.SWEETS;
+        break;
       case "Gebäck":
         transportProduct.category = Categories.BAKERY;
+        break;
       case "Sonstiges":
         transportProduct.category = Categories.MISC;
-      default:
-        transportProduct.category = Categories.VEGETABLE;
+        break;
     }
 
     if (parseFloat(product.price.replace(",", ".")) === NaN) {
@@ -80,7 +93,6 @@ class CreationPage extends React.Component {
     } else {
       transportProduct.price = parseFloat(product.price.replace(",", "."));
     }
-    transportProduct.imgSrc = product.imgSrc.split(".")[0];
 
     return transportProduct;
   }
@@ -97,6 +109,7 @@ class CreationPage extends React.Component {
     ) {
       let transferProductStructure = this.createTransferStruct(this.product);
       console.log(transferProductStructure);
+      shopStore.creatArticle(transferProductStructure, this.img);
     }
   }
 
@@ -169,22 +182,19 @@ class CreationPage extends React.Component {
               <Form.File
                 id='custom-file'
                 label={this.product.imgSrc}
+                name='productImage'
                 custom
                 onChange={this.uploadImage.bind(this)}
               />
             </Form.Group>
 
             {this.loading ? (
-              <Button variant='dark' disabled>
+              <Button disabled>
                 <Spinner as='span' animation='border' size='sm' role='status' aria-hidden='true' />
                 <span className='sr-only'>Loading...</span>
               </Button>
             ) : (
-              <Button
-                variant='dark'
-                className='registerPage-button'
-                onClick={this.create.bind(this)}
-              >
+              <Button className='registerPage-button' onClick={this.create.bind(this)}>
                 Erstellen
               </Button>
             )}
