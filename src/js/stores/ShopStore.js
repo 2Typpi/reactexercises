@@ -3,6 +3,9 @@ import { observable, action } from "mobx";
 // config
 import config from "../../config/main.config";
 
+// Store imports
+import userStore from "../stores/userStore";
+
 //Helper imports
 import { getTokenFromLocalStorage, setCartToLocalStorage } from "../helper/util";
 
@@ -151,6 +154,8 @@ class ShopStore {
   }
 
   @action creatArticle(transferData, img) {
+    let dataWithUser = userStore.userFromServer;
+    dataWithUser.data = transferData;
     const postRequestOptions = {
       method: "POST",
       headers: {
@@ -159,7 +164,7 @@ class ShopStore {
         "Access-Control-Allow-Origin": "*",
         "Authorization": "Bearer " + getTokenFromLocalStorage(),
       },
-      body: JSON.stringify(transferData),
+      body: JSON.stringify(dataWithUser),
     };
     fetch(config.BASE_URL + "articles/create", postRequestOptions)
       .then((res) => {
@@ -176,6 +181,8 @@ class ShopStore {
   }
 
   @action uploadImage(img) {
+    let dataWithUser = userStore.userFromServer;
+    dataWithUser.img = img;
     const postRequestOptions = {
       method: "POST",
       headers: {

@@ -1,5 +1,8 @@
 import config from "../../config/main.config";
 
+// Store imports
+import userStore from "../stores/userStore";
+
 export function isDevelop() {
   return process.env.NODE_ENV === "develop" || typeof process.env.NODE_ENV === "undefined";
 }
@@ -108,4 +111,14 @@ export function calcTotalPrice(list) {
 
   // Round Price to 2 Digits
   return totalPrice.toFixed(2);
+}
+
+export function isAdmin() {
+  if (
+    userStore.userFromServer !== null &&
+    (userStore.userFromServer.role == "admin" || userStore.userFromServer.role == "supervisor")
+  ) {
+    return true;
+  }
+  return false;
 }

@@ -4,6 +4,12 @@ import { observer } from "mobx-react";
 import { observable } from "mobx";
 import bsCustomFileInput from "bs-custom-file-input";
 
+// Selfmade Components
+import NoAdmin from "../components/NoAdmin";
+
+// Helper
+import { isAdmin } from "../helper/util";
+
 // Enums
 import { Categories } from "../helper/Categories";
 import { PriceValues } from "../helper/PriceValues";
@@ -123,6 +129,10 @@ class CreationPage extends React.Component {
   }
 
   render() {
+    if (!isAdmin()) {
+      return <NoAdmin></NoAdmin>;
+    }
+
     return (
       <div className='outer'>
         <div className='innerRegister'>

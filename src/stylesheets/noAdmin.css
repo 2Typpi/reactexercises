@@ -1,0 +1,11 @@
+.center {
+  position: fixed;
+  top: 45%;
+  left: 50%;
+  /* bring your own prefixes */
+  transform: translate(-50%, -50%);
+}
+
+h2 {
+  color: gray;
+}
