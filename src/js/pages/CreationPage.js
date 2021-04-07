@@ -1,7 +1,7 @@
 import React from "react";
 import { Form, Button, Spinner, Alert } from "react-bootstrap";
 import { observer } from "mobx-react";
-import { observable } from "mobx";
+import { makeObservable, observable } from "mobx";
 import bsCustomFileInput from "bs-custom-file-input";
 
 // Selfmade Components
@@ -22,8 +22,23 @@ import "../../stylesheets/register.css";
 
 @observer
 class CreationPage extends React.Component {
+  product = {
+    name: "",
+    priceValue: "",
+    category: "",
+    price: "",
+    imgSrc: "",
+  };
+
+  loading = false;
+
   constructor() {
     super();
+    makeObservable(this, {
+      product: observable,
+      loading: observable,
+    });
+
     this.product = {
       name: "",
       priceValue: "",
@@ -35,16 +50,6 @@ class CreationPage extends React.Component {
 
     bsCustomFileInput.init();
   }
-
-  @observable product = {
-    name: "",
-    priceValue: "",
-    category: "",
-    price: "",
-    imgSrc: "",
-  };
-
-  @observable loading = false;
 
   createTransferStruct(product) {
     let transportProduct = {
@@ -66,7 +71,7 @@ class CreationPage extends React.Component {
         transportProduct.priceValue = PriceValues.PIECE;
         break;
     }
-    console.log(product.category);
+
     switch (product.category) {
       case "Gemüse":
         transportProduct.category = Categories.VEGETABLE;

@@ -2,11 +2,11 @@
   "env": {
     "test": {
       "presets":[
+        "react",
         "env",
-        "stage-0",
-        "react"
+        "stage-0"
       ],
-      "plugins": ["react-html-attrs", "transform-decorators-legacy", "transform-class-properties"]
+      "plugins": ["transform-decorators-legacy", "react-html-attrs", "transform-class-properties"]
     }
   }
 }

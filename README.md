@@ -1,5 +1,3 @@
-[![Build Status](https://travis-ci.org/MatiMil/react-seed.svg)](https://travis-ci.org/MatiMil/react-seed)
-
 # Installation
 
 1. Open terminal, change to this project directory and run `npm i`
@@ -14,7 +12,7 @@
 
 1. Run `npm test`
 
-# Production 
+# Production
 
 1. Run `npm run build:prod`
 2. Files should appear in a folder named `dist`

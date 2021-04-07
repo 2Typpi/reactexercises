@@ -38,7 +38,7 @@ class CartList extends Component {
     shopStore.updateAmountInCart(this.props.itemAndAmount.article, number);
   }
 
-  // Create a component to display the amount wether for order page or the cart
+  // Create a component to display the amount whether for order page or the cart
   createCountComponent() {
     let component;
     let item = this.props.itemAndAmount.article;
@@ -93,7 +93,7 @@ class CartList extends Component {
           <Figure.Image
             className='cartImage'
             alt=''
-            src={config.BASE_URL + "images/" + item.imgSrc + ".jpg"}
+            src={config.BASE_URL + "articleImages/" + item.imgSrc}
           />
           <Media.Body className='mediaBody'>
             <h4>{item.name}</h4>

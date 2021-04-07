@@ -1,4 +1,4 @@
-import { observable, action } from "mobx";
+import { makeObservable, observable, action } from "mobx";
 
 // config
 import config from "../../config/main.config";
@@ -10,16 +10,35 @@ import userStore from "../stores/userStore";
 import { getTokenFromLocalStorage, setCartToLocalStorage } from "../helper/util";
 
 class ShopStore {
-  @observable amountInCart = 0;
-  @observable itemsInCart = [];
-  @observable articleList = [];
+  amountInCart = 0;
+  itemsInCart = [];
+  articleList = [];
+
+  constructor(props) {
+    makeObservable(this, {
+      refreshAmountInCart: action,
+      refreshCart: action,
+      emptyCart: action,
+      updateAmountInCart: action,
+      addToShoppingCart: action,
+      removeFromCart: action,
+      fetchArticleList: action,
+      buyArticles: action,
+      creatArticle: action,
+      uploadImage: action,
+      toggleBoughtToast: action,
+      amountInCart: observable,
+      itemsInCart: observable,
+      articleList: observable,
+    });
+  }
 
   /**
    * After Refresh update the amount in cart
    *
    * @param {number} amount
    */
-  @action refreshAmountInCart(amount) {
+  refreshAmountInCart(amount) {
     this.amountInCart = amount;
   }
 
@@ -28,7 +47,7 @@ class ShopStore {
    *
    * @param {Array} cart
    */
-  @action refreshCart(cart) {
+  refreshCart(cart) {
     this.itemsInCart = [];
     cart.forEach((item) => this.itemsInCart.push(item));
     setCartToLocalStorage(this.itemsInCart);
@@ -37,7 +56,7 @@ class ShopStore {
   /**
    * Clears the cart
    */
-  @action emptyCart() {
+  emptyCart() {
     this.amountInCart = 0;
     this.itemsInCart = [];
     setCartToLocalStorage(this.itemsInCart);
@@ -49,7 +68,7 @@ class ShopStore {
    * @param {object} article
    * @param {number} count
    */
-  @action updateAmountInCart(article, count) {
+  updateAmountInCart(article, count) {
     let isItemInCart = this.itemsInCart.find((element) => element.article.id === article.id);
     if (isItemInCart !== undefined) {
       let indexInCart = this.itemsInCart.indexOf(isItemInCart);
@@ -64,7 +83,7 @@ class ShopStore {
    * @param {number} count
    * @param {object} article
    */
-  @action addToShoppingCart(count, article) {
+  addToShoppingCart(count, article) {
     let isItemInCart = this.itemsInCart.find((element) => element.article.id === article.id);
 
     if (isItemInCart === undefined) {
@@ -84,7 +103,7 @@ class ShopStore {
    *
    * @param {object} article
    */
-  @action removeFromCart(article) {
+  removeFromCart(article) {
     let indexOfDelete = this.itemsInCart.indexOf(article);
     console.log(indexOfDelete);
     if (indexOfDelete >= 0) {
@@ -97,7 +116,7 @@ class ShopStore {
   /**
    * Fetch all Articles form the Backend
    */
-  @action fetchArticleList() {
+  fetchArticleList() {
     return fetch(config.BASE_URL + "articles", {
       method: "GET",
       headers: {
@@ -124,7 +143,7 @@ class ShopStore {
    *
    * @param {array} transferData
    */
-  @action buyArticles(transferData) {
+  buyArticles(transferData) {
     // Set header and body for POST request
     const postRequestOptions = {
       method: "POST",
@@ -153,7 +172,7 @@ class ShopStore {
       });
   }
 
-  @action creatArticle(transferData, img) {
+  creatArticle(transferData, img) {
     let dataWithUser = userStore.userFromServer;
     dataWithUser.data = transferData;
     const postRequestOptions = {
@@ -180,7 +199,7 @@ class ShopStore {
       });
   }
 
-  @action uploadImage(img) {
+  uploadImage(img) {
     let dataWithUser = userStore.userFromServer;
     dataWithUser.img = img;
     const postRequestOptions = {
@@ -206,9 +225,9 @@ class ShopStore {
   }
 
   // Toast States
-  @observable boughtToast = false;
+  boughtToast = false;
 
-  @action toggleBoughtToast(bool) {
+  toggleBoughtToast(bool) {
     this.boughtToast = bool;
   }
 }

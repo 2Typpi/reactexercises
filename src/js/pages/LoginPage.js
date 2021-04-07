@@ -1,27 +1,33 @@
 import React from "react";
 import { Form, Button, Alert } from "react-bootstrap";
 import { observer } from "mobx-react";
-import { action, observable } from "mobx";
+import { makeObservable, observable } from "mobx";
 
 //Store Imports
 import userStore from "../stores/userStore";
+import navBarStore from "../stores/NavBarStore";
 
 //Style Imports
 import "../../stylesheets/login.css";
 
 @observer
 class LoginPage extends React.Component {
-  @observable user = {
+  user = {
     username: "",
     password: "",
   };
 
-  @observable loginError = false;
+  loginError = false;
 
-  @observable loading = false;
+  loading = false;
 
   constructor() {
     super();
+    makeObservable(this, {
+      user: observable,
+      loginError: observable,
+      loading: observable,
+    });
     this.user = {
       username: "",
       password: "",
@@ -54,12 +60,17 @@ class LoginPage extends React.Component {
 
   handleChange(prop, e) {
     this.loginError = false;
-    userStore.loginRequestError = false;
+    userStore.setLoginRequestError(false);
     this.user[prop] = e.target.value;
   }
 
+  goToRegister() {
+    navBarStore.setStatus("register");
+    this.props.history.push("/register");
+  }
+
   render() {
-    let error = userStore.loginRequestError;
+    const { loginRequestError } = userStore;
     return (
       <div className='outer'>
         <div className='innerLogin'>
@@ -71,7 +82,7 @@ class LoginPage extends React.Component {
                 type='text'
                 required
                 placeholder='Username'
-                isInvalid={error}
+                isInvalid={loginRequestError}
                 onChange={this.handleChange.bind(this, "username")}
               />
               <Form.Control.Feedback type='invalid'>
@@ -86,7 +97,7 @@ class LoginPage extends React.Component {
                 type='password'
                 placeholder='Passwort'
                 value={this.user.password}
-                isInvalid={error}
+                isInvalid={loginRequestError}
                 onChange={this.handleChange.bind(this, "password")}
               />
               <Form.Control.Feedback type='invalid'>
@@ -110,7 +121,7 @@ class LoginPage extends React.Component {
                   Login
                 </Button>
               )}
-              <Button className='register-button' href='#/register'>
+              <Button className='register-button' onClick={this.goToRegister.bind(this)}>
                 Registieren
               </Button>
             </div>

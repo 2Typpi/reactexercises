@@ -13,6 +13,7 @@ import { removeTokenFromStorage, getCartFromLocalStorage } from "../helper/util"
 //Store imports
 import shopStore from "../stores/ShopStore";
 import userStore from "../stores/userStore";
+import navBarStore from "../stores/NavBarStore";
 
 //Style import
 import "../../stylesheets/navbar.css";
@@ -21,9 +22,9 @@ import "../../stylesheets/navbar.css";
 class NavBar extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      key: window.location.hash.substring(2) ? window.location.hash.substring(2) : "home",
-    };
+    navBarStore.setStatus(
+      window.location.hash.substring(2) ? window.location.hash.substring(2) : "home"
+    );
   }
 
   componentDidMount() {
@@ -33,18 +34,14 @@ class NavBar extends Component {
     }
   }
 
-  // setState is needed to reload the component
   handleItemClick(e) {
-    this.setState({
-      key: e,
-    });
+    navBarStore.setStatus(e);
   }
 
   render() {
     const { amountInCart } = shopStore;
     //has to be mentioned for reload of component
-    const { key } = this.state;
-    let activeKey = window.location.hash.substring(2) ? window.location.hash.substring(2) : "home";
+    const { status } = navBarStore;
     return (
       <Navbar className='navbar-all' variant='dark' expand='lg' fixed='top'>
         <Navbar.Brand>
@@ -55,13 +52,13 @@ class NavBar extends Component {
           <Nav
             variant='pills'
             className='mr-auto'
-            activeKey='Home'
+            status='Home'
             onSelect={this.handleItemClick.bind(this)}
           >
-            <Nav.Link as={Link} to='/home' active={activeKey === "home"} eventKey='home'>
+            <Nav.Link as={Link} to='/home' active={status === "home"} eventKey='home'>
               Home
             </Nav.Link>
-            <Nav.Link as={Link} to='/shop' active={activeKey === "shop"} eventKey='shop'>
+            <Nav.Link as={Link} to='/shop' active={status === "shop"} eventKey='shop'>
               Shop
             </Nav.Link>
             {userStore.userFromServer !== null &&
@@ -70,7 +67,7 @@ class NavBar extends Component {
               <Nav.Link
                 as={Link}
                 to='/creation'
-                active={key === "creation"}
+                active={status === "creation"}
                 eventKey='creation'
                 onSelect={this.handleItemClick.bind(this)}
               >
@@ -87,7 +84,7 @@ class NavBar extends Component {
               <Nav.Link
                 as={Link}
                 to='/order/all'
-                active={key === "orderall"}
+                active={status === "orderall"}
                 eventKey='orderall'
                 onSelect={this.handleItemClick.bind(this)}
               >
@@ -102,7 +99,7 @@ class NavBar extends Component {
               <Nav.Link
                 as={Link}
                 to='/order'
-                active={key === "order"}
+                active={status === "order"}
                 eventKey='order'
                 onSelect={this.handleItemClick.bind(this)}
               >
@@ -117,7 +114,7 @@ class NavBar extends Component {
             className='justify-content-end'
             onSelect={this.handleItemClick.bind(this)}
           >
-            <Nav.Link as={Link} to='/cart' active={activeKey === "cart"} eventKey='cart'>
+            <Nav.Link as={Link} to='/cart' active={status === "cart"} eventKey='cart'>
               <div>
                 Im Warenkorb: {amountInCart}
                 <Icon.Cart />
@@ -130,7 +127,7 @@ class NavBar extends Component {
               className='justify-content-end'
               onSelect={this.handleItemClick.bind(this)}
             >
-              <Nav.Link as={Link} to='/login' active={activeKey === "login"} eventKey='login'>
+              <Nav.Link as={Link} to='/login' active={status === "login"} eventKey='login'>
                 Login
               </Nav.Link>
             </Nav>

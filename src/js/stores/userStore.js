@@ -1,4 +1,4 @@
-import { action, computed, observable } from "mobx";
+import { makeObservable, action, computed, observable } from "mobx";
 import config from "../../config/main.config";
 import history from "../helper/browserHistory";
 
@@ -11,13 +11,28 @@ import {
 } from "../helper/util";
 
 class UserStore {
-  @observable user = null;
-  @observable loading = false;
-  @observable error = false;
-  @observable loginRequestError = false;
-  @observable registerRequestError = false;
+  user = null;
+  loading = false;
+  error = false;
+  loginRequestError = false;
+  registerRequestError = false;
 
-  @computed get userFromServer() {
+  constructor(props) {
+    makeObservable(this, {
+      userFromServer: computed,
+      getUsers: action,
+      authenticateUser: action,
+      registerUser: action,
+      setLoginRequestError: action,
+      user: observable,
+      loading: observable,
+      error: observable,
+      loginRequestError: observable,
+      registerRequestError: observable,
+    });
+  }
+
+  get userFromServer() {
     if (this.user === null) {
       if (getUserFromLocalStorage() !== null && typeof getUserFromLocalStorage() !== "undefined") {
         this.user = getUserFromLocalStorage();
@@ -26,7 +41,7 @@ class UserStore {
     return this.user;
   }
 
-  @action getUsers() {
+  getUsers() {
     fetch(config.BASE_URL + "users/getAll", {
       method: "GET",
       headers: {
@@ -55,7 +70,7 @@ class UserStore {
       });
   }
 
-  @action authenticateUser(userToAuthenticate) {
+  authenticateUser(userToAuthenticate) {
     const token = getTokenFromLocalStorage();
     if (userToAuthenticate === null) {
       alert("Bitte melden Sie sich erneut an.");
@@ -98,7 +113,7 @@ class UserStore {
     }
   }
 
-  @action registerUser(userToRegister) {
+  registerUser(userToRegister) {
     const token = getTokenFromLocalStorage();
     delete userToRegister.passwordRepeat;
     if (userToRegister === null) {
@@ -138,6 +153,10 @@ class UserStore {
           throw error;
         });
     }
+  }
+
+  setLoginRequestError(boolean) {
+    this.loginRequestError = boolean;
   }
 }
 

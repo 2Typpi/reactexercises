@@ -7,6 +7,7 @@ import { NotificationContainer, NotificationManager } from "react-notifications"
 //Stores
 import shopStore from "../stores/ShopStore";
 import userStore from "../stores/userStore";
+import navBarStore from "../stores/NavBarStore";
 
 // Helpers
 import { calcTotalPrice, getCartFromLocalStorage } from "../helper/util";
@@ -22,6 +23,7 @@ import "../../stylesheets/cart.css";
 class Cart extends React.Component {
   constructor(props) {
     super(props);
+    console.log(props.history);
     this.cartList = [];
   }
 
@@ -63,6 +65,11 @@ class Cart extends React.Component {
       shopStore.refreshCart(localStoreCart);
       this.cartList = shopStore.itemsInCart;
     }
+  }
+
+  goToLogin() {
+    navBarStore.setStatus("login");
+    this.props.history.push("/login");
   }
 
   render() {
@@ -114,7 +121,7 @@ class Cart extends React.Component {
               Jetzt Kaufen
             </Button>
           ) : (
-            <Button className='buyNow' href='#login'>
+            <Button className='buyNow' onClick={this.goToLogin.bind(this)}>
               Jetzt Kaufen
             </Button>
           )}

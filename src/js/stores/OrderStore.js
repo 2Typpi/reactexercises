@@ -1,4 +1,4 @@
-import { observable, action } from "mobx";
+import { makeObservable, observable, action } from "mobx";
 
 // Store imports
 import userStore from "../stores/userStore";
@@ -10,12 +10,21 @@ import config from "../../config/main.config";
 import { getTokenFromLocalStorage } from "../helper/util";
 
 class OrderStore {
-  @observable orders = [];
+  orders = [];
+  status = "";
+
+  constructor(props) {
+    makeObservable(this, {
+      fetchOrders: action,
+      fetchAllOrders: action,
+      orders: observable,
+    });
+  }
 
   /**
    * Fetch all Orders for one User from the Backend
    */
-  @action fetchOrders() {
+  fetchOrders() {
     return fetch(config.BASE_URL + "order", {
       method: "POST",
       headers: {
@@ -42,7 +51,7 @@ class OrderStore {
   /**
    * Fetch all Orders from the Backend
    */
-  @action fetchAllOrders() {
+  fetchAllOrders() {
     return fetch(config.BASE_URL + "order/all", {
       method: "POST",
       headers: {

@@ -10,6 +10,7 @@ import Cart from "./Cart";
 import Login from "./LoginPage";
 import Register from "./RegisterPage";
 import Order from "./OrderPage";
+import AllOrder from "./AllOrdersPage";
 import Creation from "./CreationPage";
 import Footer from "../components/Footer";
 
@@ -21,7 +22,7 @@ export default class Layout extends React.Component {
   render() {
     return (
       <div>
-        <HashRouter>
+        <HashRouter history={history}>
           <div className='flex-container'>
             <NavBar location={window.location} />
             <div className='container'>
@@ -32,12 +33,18 @@ export default class Layout extends React.Component {
               <Route exact path='/order' component={Order} />
               <Route exact path='/login' component={Login} />
               <Route exact path='/register' component={Register} />
-              <Route exact path='/order/all' component={Order} />
+              <Route exact path='/order/all' component={AllOrder} />
               <Route exact path='/creation' component={Creation} />
+
+              <Route exact path='/about' component={Home} />
+              <Route exact path='/FAQ' component={Home} />
+              <Route exact path='/privacy' component={Home} />
+              <Route exact path='/imprint' component={Home} />
+              <Route exact path='/contact' component={Home} />
             </div>
           </div>
         </HashRouter>
-        <Footer></Footer>
+        <Footer history={history}></Footer>
       </div>
     );
   }

@@ -38,9 +38,9 @@ class Footer extends React.Component {
 
         <div class='footer-left'>
           <p class='footer-links'>
-            <a href='#/home'>Home</a> · <a href='#/shop'>Shop</a> · <a href='#/about'>Über uns</a> ·{" "}
-            <a href='#/contact'>Kontakt</a> · <a href='#/FAQ'>FAQ</a> ·{" "}
-            <a href='#/privacy'>Datenschutz</a> · <a href='#/imprint'>Impressum</a>
+            <a href='#/about'>Über uns</a> · <a href='#/contact'>Kontakt</a> ·{" "}
+            <a href='#/FAQ'>FAQ</a> · <a href='#/privacy'>Datenschutz</a> ·{" "}
+            <a href='#/imprint'>Impressum</a>
           </p>
 
           <p>BioKuma © 2021</p>
