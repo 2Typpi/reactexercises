@@ -113,15 +113,9 @@ class OrderPage extends React.Component {
                     </Row>{" "}
                     <hr />
                     <b>Gesamtpreis: {totalPrice} €</b>
-                    {userStore.userFromServer !== null &&
-                    (userStore.userFromServer.role === "supervisor" ||
-                      userStore.userFromServer.role === "admin") ? (
-                      <div></div>
-                    ) : (
-                      <Button onClick={this.reBuy.bind(this, orderArticle.datetime)}>
-                        Nochmal Kaufen
-                      </Button>
-                    )}
+                    <Button onClick={this.reBuy.bind(this, orderArticle.datetime)}>
+                      Nochmal Kaufen
+                    </Button>
                   </Card.Body>
                 </Accordion.Collapse>
               </Card>

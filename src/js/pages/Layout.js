@@ -22,7 +22,7 @@ export default class Layout extends React.Component {
   render() {
     return (
       <div>
-        <HashRouter history={history}>
+        <HashRouter>
           <div className='flex-container'>
             <NavBar location={window.location} />
             <div className='container'>

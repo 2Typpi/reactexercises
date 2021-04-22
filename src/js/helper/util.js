@@ -2,6 +2,7 @@ import config from "../../config/main.config";
 
 // Store imports
 import userStore from "../stores/userStore";
+import shopStore from "../stores/ShopStore";
 
 export function isDevelop() {
   return process.env.NODE_ENV === "develop" || typeof process.env.NODE_ENV === "undefined";
@@ -121,4 +122,16 @@ export function isAdmin() {
     return true;
   }
   return false;
+}
+
+export function dissolveProductIds(list) {
+  let completeProductList = [];
+  list.forEach((element) => {
+    let found = shopStore.articleList.find((e) => e.id === element.productId);
+    found["productQuantity"] = element.productQuantity;
+    // Clone Object to Create leave the mobx relation out
+    const clone = JSON.parse(JSON.stringify(found));
+    completeProductList.push(clone);
+  });
+  return completeProductList;
 }

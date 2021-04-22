@@ -10,6 +10,7 @@ import config from "../../config/main.config";
 import { getTokenFromLocalStorage } from "../helper/util";
 
 class OrderStore {
+  allOrders = [];
   orders = [];
   status = "";
 
@@ -17,8 +18,14 @@ class OrderStore {
     makeObservable(this, {
       fetchOrders: action,
       fetchAllOrders: action,
+      getAllOrders: action,
+      allOrders: observable,
       orders: observable,
     });
+  }
+
+  getAllOrders() {
+    return this.allOrders;
   }
 
   /**
@@ -64,7 +71,9 @@ class OrderStore {
     })
       .then((res) => {
         if (res.status >= 200 && res.status < 300) {
-          res.json().then((response) => (this.orders = response));
+          res.json().then((response) => {
+            this.allOrders = response;
+          });
         } else {
           console.log("error on fetching1");
         }

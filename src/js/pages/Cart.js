@@ -23,7 +23,6 @@ import "../../stylesheets/cart.css";
 class Cart extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props.history);
     this.cartList = [];
   }
 
@@ -48,10 +47,6 @@ class Cart extends React.Component {
     // Reduces data to id and count for the transfer
     shopStore.buyArticles(this.createTransferData());
     NotificationManager.success("Vielen Dank für ihren Einkauf!");
-  }
-
-  toggleToast(e) {
-    shopStore.toggleBoughtToast(false);
   }
 
   /**

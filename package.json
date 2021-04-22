@@ -4,7 +4,7 @@
   "description": "Frontend of the Biokuma Website",
   "main": "client.js",
   "scripts": {
-    "dev": "webpack serve --config webpack.config.debug.js --content-base dev --inline --hot",
+    "dev": "webpack serve --config webpack.config.debug.js --content-base dev --inline --hot", 
     "build:prod": "webpack -p --progress --config webpack.config.js",
     "build:dev": "webpack --config webpack.config.debug.js",
     "test": "jest",
@@ -34,6 +34,7 @@
     "react": "^17.0.2",
     "react-bootstrap": "^1.5.2",
     "react-bootstrap-icons": "^1.4.0",
+    "react-datepicker": "^3.7.0",
     "react-dom": "^17.0.2",
     "react-notifications": "^1.7.2",
     "react-router": "^5.2.0",

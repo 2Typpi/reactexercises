@@ -107,7 +107,7 @@ class Shop extends React.Component {
 
     return (
       <div>
-        <form className='searchForm' action=''>
+        <form className='searchForm'>
           <input
             className='searchBar'
             type='search'

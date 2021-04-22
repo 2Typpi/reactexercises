@@ -8,9 +8,7 @@
 1. Run `npm run dev`
 2. Open browser on [http://localhost:8080/#/](http://localhost:8080/#/)
 
-# Test
-
-1. Run `npm test`
+Note: add --host 192.168.2.122 to npm start command to start it to accessable home network
 
 # Production
 

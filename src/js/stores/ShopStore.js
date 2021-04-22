@@ -26,11 +26,15 @@ class ShopStore {
       buyArticles: action,
       creatArticle: action,
       uploadImage: action,
-      toggleBoughtToast: action,
+      getArticleList: action,
       amountInCart: observable,
       itemsInCart: observable,
       articleList: observable,
     });
+  }
+
+  getArticleList() {
+    return this.articleList;
   }
 
   /**
@@ -161,7 +165,6 @@ class ShopStore {
         if (res.status >= 200 && res.status < 300) {
           res.json().then((response) => console.log(response));
           this.emptyCart();
-          this.toggleBoughtToast(true);
         } else {
           res.json().then((response) => alert(response));
         }
@@ -222,13 +225,6 @@ class ShopStore {
         console.log("Error on fetching3");
         throw error;
       });
-  }
-
-  // Toast States
-  boughtToast = false;
-
-  toggleBoughtToast(bool) {
-    this.boughtToast = bool;
   }
 }
 
