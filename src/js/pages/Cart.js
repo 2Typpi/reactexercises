@@ -74,6 +74,8 @@ class Cart extends React.Component {
     if (this.cartList.length > 0) {
       totalPrice = calcTotalPrice(this.cartList);
     }
+
+    console.log(this.cartList);
     // Split in Half for better displaying
     let cart = this.cartList.map((article) => <CartList itemAndAmount={article} isOrder={false} />);
     let leftSide;

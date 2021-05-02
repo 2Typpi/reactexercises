@@ -17,6 +17,9 @@ import "../../stylesheets/cartList.css";
 
 @observer
 class AdminOrders extends Component {
+  PIECE = "Stückpreis";
+  WEIGH = "Kilopreis";
+
   constructor(props) {
     super(props);
   }
@@ -25,6 +28,12 @@ class AdminOrders extends Component {
     let component = [];
     this.props.order.forEach((element) => {
       switch (element.priceValue) {
+        case this.PIECE:
+          element.priceValue = "Stk";
+          break;
+        case this.WEIGH:
+          element.priceValue = "g";
+          break;
         case PriceValues.PIECE:
           element.priceValue = "Stk";
           break;

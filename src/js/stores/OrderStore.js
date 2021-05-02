@@ -44,7 +44,10 @@ class OrderStore {
     })
       .then((res) => {
         if (res.status >= 200 && res.status < 300) {
-          res.json().then((response) => (this.orders = response));
+          res.json().then((response) => {
+            console.log(response);
+            this.orders = response;
+          });
         } else {
           console.log("error on fetching1");
         }

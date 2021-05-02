@@ -53,7 +53,10 @@ class LoginPage extends React.Component {
       this.loading = false;
       this.loginError = true;
     } else {
-      userStore.authenticateUser(this.user);
+      userStore.authenticateUser(this.user).then(() => {
+        navBarStore.setStatus("shop");
+        this.props.history.push("/shop");
+      });
       this.loading = false;
     }
   }

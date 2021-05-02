@@ -8,6 +8,7 @@ import userStore from "../stores/userStore";
 
 //Helper imports
 import { getTokenFromLocalStorage, setCartToLocalStorage } from "../helper/util";
+import { ConeStriped } from "react-bootstrap-icons";
 
 class ShopStore {
   amountInCart = 0;
@@ -192,6 +193,34 @@ class ShopStore {
       .then((res) => {
         if (res.status >= 200 && res.status < 300) {
           this.uploadImage(img);
+        } else {
+          res.json().then((response) => alert(response));
+        }
+      })
+      .catch((error) => {
+        console.log("Error on fetching3");
+        throw error;
+      });
+  }
+
+  delete(id) {
+    let jsonObject = {
+      id: id,
+    };
+    const postRequestOptions = {
+      method: "POST",
+      headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json",
+        "Access-Control-Allow-Origin": "*",
+        "Authorization": "Bearer " + getTokenFromLocalStorage(),
+      },
+      body: JSON.stringify(jsonObject),
+    };
+    fetch(config.BASE_URL + "articles/delete", postRequestOptions)
+      .then((res) => {
+        if (res.status >= 200 && res.status < 300) {
+          this.fetchArticleList();
         } else {
           res.json().then((response) => alert(response));
         }

@@ -102,12 +102,17 @@ export function getCartFromLocalStorage() {
 
 export function calcTotalPrice(list) {
   let totalPrice = 0.0;
-
   // Detect how to Calculate Price
   list.forEach((item) => {
-    item.article.priceValue === "Kilopreis"
-      ? (totalPrice += (item.article.price / 1000) * item.count)
-      : (totalPrice += item.article.price * item.count);
+    if (item.priceValue === "Stückpreis") {
+      totalPrice += item.price * item.productQuantity;
+    } else if (item.priceValue === "Kilopreis") {
+      totalPrice += (item.price / 1000) * item.productQuantity;
+    } else {
+      item.priceValue === 0
+        ? (totalPrice += (item.price / 1000) * item.productQuantity)
+        : (totalPrice += item.price * item.productQuantity);
+    }
   });
 
   // Round Price to 2 Digits

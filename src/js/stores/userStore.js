@@ -2,6 +2,8 @@ import { makeObservable, action, computed, observable } from "mobx";
 import config from "../../config/main.config";
 import history from "../helper/browserHistory";
 
+import navBarStore from "./NavBarStore";
+
 import {
   getTokenFromLocalStorage,
   getUserFromLocalStorage,
@@ -93,8 +95,6 @@ class UserStore {
               setTokenLocalStorage(json.token);
               setUserToLocalStorage(json);
               this.user = json;
-              history.replace("#/shop");
-              history.go();
             });
           } else {
             removeTokenFromStorage();

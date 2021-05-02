@@ -3,6 +3,7 @@ import { Form, Button, Spinner, Alert } from "react-bootstrap";
 import { observer } from "mobx-react";
 import { makeObservable, observable } from "mobx";
 import bsCustomFileInput from "bs-custom-file-input";
+import { NotificationContainer, NotificationManager } from "react-notifications";
 
 // Selfmade Components
 import NoAdmin from "../components/NoAdmin";
@@ -19,6 +20,7 @@ import shopStore from "../stores/ShopStore";
 
 //Style Imports
 import "../../stylesheets/register.css";
+import "react-notifications/lib/notifications.css";
 
 @observer
 class CreationPage extends React.Component {
@@ -120,7 +122,11 @@ class CreationPage extends React.Component {
     ) {
       let transferProductStructure = this.createTransferStruct(this.product);
       console.log(transferProductStructure);
-      shopStore.creatArticle(transferProductStructure, this.img);
+      shopStore.creatArticle(transferProductStructure, this.img).then(() => {
+        NotificationManager.success("Artikel wurde erstellt!");
+      });
+    } else {
+      NotificationManager.error("Alle Felder müssen ausgewählt sein!");
     }
   }
 
@@ -140,6 +146,7 @@ class CreationPage extends React.Component {
 
     return (
       <div className='outer'>
+        <NotificationContainer />
         <div className='innerRegister'>
           <Form>
             <Form.Group controlId='formGridFirstName'>

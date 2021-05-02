@@ -12,6 +12,7 @@ import shopStore from "../stores/ShopStore";
 
 //Selfmade Components
 import { PriceValues } from "../helper/PriceValues";
+import { isAdmin } from "../helper/util";
 
 //Style Import
 import "react-notifications/lib/notifications.css";
@@ -30,6 +31,11 @@ class ArticleCard extends Component {
         break;
     }
     this.state = { articleAmount: 0, showToast: false };
+  }
+
+  deleteItem(e) {
+    shopStore.delete(this.props.article.id);
+    NotificationManager.success("Artikel wurde gelöscht!");
   }
 
   updateInput(e) {
@@ -87,10 +93,15 @@ class ArticleCard extends Component {
             )}
             <div className='price-box'>
               <b>{priceDisplay + "€ " + item.priceValue}</b>
-
-              <Button className='cart-button' onClick={this.putIntoCart.bind(this)}>
-                <Icon.Cart />
-              </Button>
+              {isAdmin() ? (
+                <Button className='delete-button' onClick={this.deleteItem.bind(this)}>
+                  Löschen
+                </Button>
+              ) : (
+                <Button className='cart-button' onClick={this.putIntoCart.bind(this)}>
+                  <Icon.Cart />
+                </Button>
+              )}
             </div>
           </Card.Body>
         </Card>

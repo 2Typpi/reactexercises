@@ -19,6 +19,7 @@ import "../../stylesheets/cartList.css";
 class CartList extends Component {
   constructor(props) {
     super(props);
+    console.log(props.itemAndAmount);
     switch (props.itemAndAmount.article.priceValue) {
       case PriceValues.PIECE:
         props.itemAndAmount.article.priceValue = "Stückpreis";

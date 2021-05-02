@@ -32,6 +32,24 @@
   border-color: green;
 }
 
+.delete-button {
+  position: absolute;
+  background-color: red;
+  border-color: red;
+  bottom: 0;
+  right: 0;
+}
+
+.delete-button:hover {
+  background-color: darkred;
+  border-color: darkred;
+}
+
+.delete-button:focus {
+  background-color: darkred;
+  border-color: darkred;
+}
+
 .amountInputPiece {
   border-color: #68a94a;
   width: 73%;

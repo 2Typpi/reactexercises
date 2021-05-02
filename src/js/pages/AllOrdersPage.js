@@ -3,7 +3,6 @@ import { observer } from "mobx-react";
 import { Row, Col, Card, Spinner, Button, Accordion } from "react-bootstrap";
 import DatePicker from "react-datepicker";
 import { registerLocale } from "react-datepicker";
-import * as Icon from "react-bootstrap-icons";
 import de from "date-fns/locale/de";
 registerLocale("de", de);
 
@@ -13,15 +12,7 @@ import shopStore from "../stores/ShopStore";
 import userStore from "../stores/userStore";
 
 // Helpers
-import {
-  calcTotalPrice,
-  isAdmin,
-  dissolveProductIds,
-  getTokenFromLocalStorage,
-} from "../helper/util";
-
-// config
-import config from "../../config/main.config";
+import { isAdmin, dissolveProductIds } from "../helper/util";
 
 //Selfmade Components
 import AdminOrders from "../components/AdminOrders";
@@ -32,7 +23,7 @@ import "../../stylesheets/order.css";
 import "react-datepicker/dist/react-datepicker.css";
 
 @observer
-class OrderPage extends React.Component {
+class AllOrdersPage extends React.Component {
   orderList = [];
   articleList = [];
 
@@ -49,24 +40,27 @@ class OrderPage extends React.Component {
   }
 
   componentDidMount() {
-    if (this.articleList.length > 0 && this.orderList.length > 0) {
-      this.setState({ loadingOrders: false, loadingArticles: false });
-      return;
-    }
-
+    // only admins are allowed to see this page
     if (
       userStore.userFromServer !== null &&
       (userStore.userFromServer.role === "supervisor" || userStore.userFromServer.role === "admin")
     ) {
-      orderStore.fetchAllOrders().then(() => {
+      if (orderStore.allOrders.length <= 0 || orderStore.allOrders === undefined) {
+        orderStore.fetchAllOrders().then(() => {
+          this.setState({ date: this.state.date, loadingOrders: false });
+        });
+      } else {
+        // if Data is already loaded no need to fetch again
         this.setState({ date: this.state.date, loadingOrders: false });
-      });
-    }
-
-    if (shopStore.articleList.length <= 0 || shopStore.articleList === undefined) {
-      shopStore.fetchArticleList().then(() => {
+      }
+      if (shopStore.articleList.length <= 0 || shopStore.articleList === undefined) {
+        shopStore.fetchArticleList().then(() => {
+          this.setState({ date: this.state.date, loadingArticles: false });
+        });
+      } else {
+        // if Data is already loaded no need to fetch again
         this.setState({ date: this.state.date, loadingArticles: false });
-      });
+      }
     }
   }
 
@@ -85,7 +79,7 @@ class OrderPage extends React.Component {
 
     let listToFilter = this.orderList;
 
-    if (this.state.filteredUser) {
+    if (this.state.filteredUser || this.state.filteredDate) {
       listToFilter = this.state.filteredList;
     }
 
@@ -109,9 +103,13 @@ class OrderPage extends React.Component {
   }
 
   updateInput(e) {
+    if (e.target.value === "") {
+      this.setState({ filteredList: undefined, filteredUser: false });
+      return;
+    }
     let listToFilter = this.orderList;
 
-    if (this.state.filteredDate) {
+    if (this.state.filteredDate || this.state.filteredUser) {
       listToFilter = this.state.filteredList;
     }
 
@@ -143,42 +141,26 @@ class OrderPage extends React.Component {
     }
 
     let completeOrders = [];
+    let displayedList = this.orderList;
     if (this.state.filteredDate || this.state.filteredUser) {
-      for (const order of this.state.filteredList) {
-        let productList = dissolveProductIds(order.order);
-        let list = <AdminOrders order={productList} />;
-        const accordion = (
-          <Accordion>
-            <Card>
-              <Accordion.Toggle as={Card.Header} eventKey='0'>
-                {order.datetime} {order.username}
-              </Accordion.Toggle>
-              <Accordion.Collapse eventKey='0'>
-                <Card.Body>{list}</Card.Body>
-              </Accordion.Collapse>
-            </Card>
-          </Accordion>
-        );
-        completeOrders.push(accordion);
-      }
-    } else {
-      for (const order of this.orderList) {
-        let productList = dissolveProductIds(order.order);
-        let list = order.order.map(() => <AdminOrders order={productList} />);
-        const accordion = (
-          <Accordion>
-            <Card>
-              <Accordion.Toggle as={Card.Header} eventKey='0'>
-                {order.datetime} {order.username}
-              </Accordion.Toggle>
-              <Accordion.Collapse eventKey='0'>
-                <Card.Body>{list}</Card.Body>
-              </Accordion.Collapse>
-            </Card>
-          </Accordion>
-        );
-        completeOrders.push(accordion);
-      }
+      displayedList = this.state.filteredList;
+    }
+    for (const order of displayedList) {
+      let productList = dissolveProductIds(order.order);
+      let list = <AdminOrders order={productList} />;
+      const accordion = (
+        <Accordion>
+          <Card>
+            <Accordion.Toggle as={Card.Header} eventKey='0'>
+              {order.datetime} {order.username}
+            </Accordion.Toggle>
+            <Accordion.Collapse eventKey='0'>
+              <Card.Body>{list}</Card.Body>
+            </Accordion.Collapse>
+          </Card>
+        </Accordion>
+      );
+      completeOrders.push(accordion);
     }
 
     return (
@@ -201,4 +183,4 @@ class OrderPage extends React.Component {
   }
 }
 
-export default OrderPage;
+export default AllOrdersPage;
