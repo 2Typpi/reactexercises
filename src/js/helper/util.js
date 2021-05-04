@@ -140,3 +140,18 @@ export function dissolveProductIds(list) {
   });
   return completeProductList;
 }
+
+export function dissolvePriceValue(article) {
+  switch (article.priceValue) {
+    case 1:
+      article.priceValue = "Stückpreis";
+      break;
+    case 0:
+      article.priceValue = "Kilopreis";
+      break;
+    default:
+      article.priceValue = "Stückpreis";
+      break;
+  }
+  return article;
+}

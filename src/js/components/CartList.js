@@ -9,8 +9,8 @@ import config from "../../config/main.config";
 // Stores
 import shopStore from "../stores/ShopStore";
 
-//Selfmade Components
-import { PriceValues } from "../helper/PriceValues";
+//Helper
+import { dissolvePriceValue } from "../helper/util";
 
 // Style
 import "../../stylesheets/cartList.css";
@@ -19,14 +19,8 @@ import "../../stylesheets/cartList.css";
 class CartList extends Component {
   constructor(props) {
     super(props);
-    console.log(props.itemAndAmount);
-    switch (props.itemAndAmount.article.priceValue) {
-      case PriceValues.PIECE:
-        props.itemAndAmount.article.priceValue = "Stückpreis";
-        break;
-      case PriceValues.WEIGH:
-        props.itemAndAmount.article.priceValue = "Kilopreis";
-        break;
+    if (Number.isInteger(props.itemAndAmount.article.priceValue)) {
+      dissolvePriceValue(props.itemAndAmount.article);
     }
   }
 

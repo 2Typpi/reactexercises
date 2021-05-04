@@ -12,7 +12,7 @@ import shopStore from "../stores/ShopStore";
 
 //Selfmade Components
 import { PriceValues } from "../helper/PriceValues";
-import { isAdmin } from "../helper/util";
+import { isAdmin, dissolvePriceValue } from "../helper/util";
 
 //Style Import
 import "react-notifications/lib/notifications.css";
@@ -22,13 +22,8 @@ import "../../stylesheets/card.css";
 class ArticleCard extends Component {
   constructor(props) {
     super(props);
-    switch (props.article.priceValue) {
-      case PriceValues.PIECE:
-        props.article.priceValue = "Stückpreis";
-        break;
-      case PriceValues.WEIGH:
-        props.article.priceValue = "Kilopreis";
-        break;
+    if (Number.isInteger(props.article.priceValue)) {
+      dissolvePriceValue(props.article);
     }
     this.state = { articleAmount: 0, showToast: false };
   }
@@ -56,6 +51,10 @@ class ArticleCard extends Component {
   }
 
   render() {
+    if (Number.isInteger(this.props.article.priceValue)) {
+      dissolvePriceValue(this.props.article);
+    }
+
     // Prepare price
     let priceDisplay = this.props.article.price.toFixed(2);
     let item = this.props.article;
